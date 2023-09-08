@@ -1,0 +1,227 @@
+{% extends "layout/appLayout.html" %}
+{% block title %}Vehicle Edit{% endblock %}
+{% block content %}
+{% include 'layout/sidenav.html' %}
+<div class="content-wrapper">
+   <div class="container-fluid">
+      <div class="row">
+         <div class="col-md-12">
+            <h2 class="page-title">Post A Vehicle</h2>
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="panel panel-default">
+                     <div class="panel-heading">Basic Info</div>
+                     <div class="panel-body">
+                        <form method="post" action="/vehicles-update" class="form-horizontal" enctype="multipart/form-data">
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label">Emri i Vetures<span style="color:red">*</span></label>
+                              <div class="col-sm-4">
+                                 <input type="hidden" value="{{ vehicle.id }}" name="id">
+                                 <input type="text" class="form-control"  name="name" value="{{ vehicle.name }}" id="brand">
+                              </div>
+                              <label class="col-sm-2 control-label">Marka<span style="color:red">*</span></label>
+                              <div class="col-sm-4">
+                                 <select name="brand_id" class="selectpicker">
+                                    {% for brand in brands %}
+                                    {% if brand.id == vehicle.brand_id %}
+                                    <option selected value="{{ brand.id }}">{{ brand.name }}</option>
+                                    {% else %}
+                                    <option value="{{ brand.id }}">{{ brand.name }}</option>
+                                    {% endif %}
+                                    {% endfor %}
+                                 </select>
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label">Pershkrimi i Vetures<span style="color:red">*</span></label>
+                              <div class="col-sm-10">
+                                 <input type="hidden" value="{{ vehicle.id }}" name="id">
+                                 <textarea class="form-control" name="overview" rows="3">{{ vehicle.overview }}</textarea>
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label">Zgjedh Marshin<span style="color:red">*</span></label>
+                              <div class="col-sm-4">
+                                 <select class="selectpicker" name="transmission" required>
+                                    <option value=""> Select </option>
+                                    <option value="Automatik" {% if vehicle.transmission == 'Automatik' %}selected{% endif %}>Automatik</option>
+                                    <option value="Manual" {% if vehicle.transmission == 'Manual' %}selected{% endif %}>Manual</option>
+                                 </select>
+                              </div>
+                              <label class="col-sm-2 control-label">Zgjedh Karburantin<span style="color:red">*</span></label>
+                              <div class="col-sm-4">
+                                 <select class="selectpicker" name="fuel" required>
+                                    <option value=""> Select </option>
+                                    <option value="Benzin" {% if vehicle.fuel == 'Benzin' %}selected{% endif %}>Benzin </option>
+                                    <option value="Diesel" {% if vehicle.fuel == 'Diesel' %}selected{% endif %}>Diesel</option>
+                                    <option value="Hybrid" {% if vehicle.fuel == 'Hybrid' %}selected{% endif %}>Hybrid</option>
+                                 </select>
+                              </div>
+
+                           </div>
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label">Kubikazha<span style="color:red">*</span></label>
+                              <div class="col-sm-4">
+                                 <input type="hidden" value="{{ vehicle.id }}" name="id">
+                                 <input type="text" name="cubical" value="{{ vehicle.cubical }}" class="form-control">
+                              </div>
+                              <label class="col-sm-2 control-label">Qmimi(per 1 dite)<span style="color:red">*</span></label>
+                              <div class="col-sm-4">
+                                 <input type="hidden" value="{{ vehicle.id }}" name="id">
+                                 <input type="text" name="price" value="{{ vehicle.price }}" class="form-control">
+                              </div>
+                              
+                           </div>
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label">Fuqia(HP)<span style="color:red">*</span></label>
+                              <div class="col-sm-4">
+                                 <input type="hidden" value="{{ vehicle.id }}" name="id">
+                                 <input type="text" name="power" value="{{ vehicle.power }}" class="form-control">
+                              </div>
+                              <label class="col-sm-2 control-label">Kilometrat<span style="color:red">*</span></label>
+                              <div class="col-sm-4">
+                                 <input type="hidden" value="{{ vehicle.id }}" name="id">
+                                 <input type="text" name="mileage" value="{{ vehicle.mileage }}" class="form-control">
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label">Viti i Prodhimit<span style="color:red">*</span></label>
+                              <div class="col-sm-4">
+                                 <input type="hidden" value="{{ vehicle.id }}" name="id">
+                                 <input type="number" min="1999" max="2023" name="year" value="{{ vehicle.year }}" class="form-control">
+                              </div>
+                              <label class="col-sm-2 control-label">Kapaciteti i Ulseve<span style="color:red">*</span></label>
+                              <div class="col-sm-4">
+                                 <input type="hidden" value="{{ vehicle.id }}" name="id">
+                                 <input type="text" name="seat" value="{{ vehicle.seat }}" class="form-control">
+                              </div>
+                           </div>
+                           <div class="hr-dashed"></div>
+                           <div class="form-group">
+                              <div class="col-sm-12">
+                                 <h4><b>Upload Images</b></h4>
+                              </div>
+                           </div>   
+                                               
+                      
+                          
+                           
+                           <div class="form-group">
+                              {% set counter = 1 %}
+                              {% for photo in vehicle.photo1 %}
+                                  <div class="col-sm-4">
+                                      Foto {{ counter }}
+                                      <img src="/uploads/{{ photo }}" width="300" height="200" style="border:solid 1px #000">
+                                      <input type="file" name="photo{{ counter }}">
+                                  </div>
+                                  {% set counter = counter + 1 %}
+                              {% endfor %}
+                          </div>
+                           <div class="hr-dashed"></div>
+                           <div class="row">
+                            <div class="col-md-12">
+                            <div class="panel panel-default">
+                            <div class="panel-heading">Opsionet Shtese</div>
+                            <div class="panel-body">
+                            <div class="form-group">
+                              <div class="col-sm-3">
+                                 <div class="checkbox checkbox-inline">
+                                   <input type="checkbox" id="airconditioner" name="airconditioner" {% if vehicle.airconditioner == 1 %}checked="checked"{% endif %}>
+                                   <label for="airconditioner"> AC </label>
+                                 </div>
+                               </div>
+                               <div class="col-sm-3">
+                                 <div class="checkbox checkbox-inline">
+                                   <input type="checkbox" id="powerdoorlocks" name="powerdoorlocks" {% if vehicle.powerdoorlocks == 1 %}checked{% endif %}>
+                                   <label for="powerdoorlocks"> Ulse me nxemje </label>
+                                 </div>
+                               </div>
+                            <div class="col-sm-3">
+                              <div class="checkbox checkbox-inline">
+                                <input type="checkbox" id="antilock" name="antilock"  {% if vehicle.antilock == 1 %}checked="checked"{% endif %}>
+                                <label for="antilock"> ABS </label>
+                              </div>
+                            </div>
+                            <div class="col-sm-3">
+                            <div class="checkbox checkbox-inline">
+                              <input type="checkbox" id="brakeassist" name="brakeassist"  {% if vehicle.brakeassist == 1 %}checked{% endif %}>
+                              <label for="brakeassist">  Asist Frenimi </label>
+                            </div>
+                           </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="col-sm-3">
+                                 <div class="checkbox checkbox-inline">
+                                   <input type="checkbox" id="powersteering" name="powersteering" {% if vehicle.powersteering == 1 %}checked{% endif %}>
+                                   <label for="powersteering"> Pasqyre Elektrike </label>
+                                 </div>
+                               </div>
+                               <div class="col-sm-3">
+                                 <div class="checkbox checkbox-inline">
+                                   <input type="checkbox" id="driverairbag" name="driverairbag"  {% if vehicle.driverairbag == 1 %}checked{% endif %}>
+                                   <label for="driverairbag"> Driver Airbag </label>
+                                 </div>
+                               </div>
+                               <div class="col-sm-3">
+                                 <div class="checkbox checkbox-inline">
+                                   <input type="checkbox" id="passengerairbag" name="passengerairbag"  {% if vehicle.passengerairbag == 1 %}checked{% endif %}>
+                                   <label for="passengerairbag"> Passenger Airbag</label>
+                                 </div>
+                               </div>
+                               <div class="col-sm-3">
+                               <div class="checkbox checkbox-inline">
+                                 <input type="checkbox" id="powerwindows" name="powerwindows"  {% if vehicle.powerwindows == 1 %}checked{% endif %}>
+                                 <label for="powerwindows">Dritare Elektrike</label>
+                               </div>
+                             </div>
+                           </div>
+                            <div class="form-group">
+                              <div class="col-sm-3">
+                                 <div class="checkbox checkbox-inline">
+                                   <input type="checkbox" id="cdplayer" name="cdplayer" {% if vehicle.cdplayer == 1 %}checked{% endif %}>
+                                   <label for="cdplayer">Navigacion</label>
+                                 </div>
+                               </div>
+                               <div class="col-sm-3">
+                                 <div class="checkbox checkbox-inline">
+                                   <input type="checkbox" id="centralock" name="centralock"  {% if vehicle.centralock == 1 %}checked{% endif %}>
+                                   <label for="centralock">Mbyllje Qendrore</label>
+                                 </div>
+                               </div>
+
+                               <div class="col-sm-3">
+                                 <div class="checkbox checkbox-inline">
+                                   <input type="checkbox" id="crashsensor" name="crashsensor"  {% if vehicle.crashsensor == 1 %}checked{% endif %}>
+                                   <label for="crashsensor">Senzora Parkimi</label>
+                                 </div>
+                               </div>
+
+                               <div class="col-sm-3">
+                                 <div class="checkbox checkbox-inline">
+                                   <input type="checkbox" id="leatherseats" name="leatherseats"  {% if vehicle.leatherseats == 1 %}checked{% endif %}>
+                                   <label for="leatherseats">Karrikat Lekure</label>
+                                 </div>
+                               </div>
+                            </div>
+                            </div>
+                            <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-2">
+                            <button class="btn btn-default" type="reset">Cancel</button>
+                            <button class="btn btn-primary" name="submit" type="submit">Save changes</button>
+                            </div>
+                            </div>
+                         </div>
+                      </div>
+                       </div>
+                        </form>
+                     </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            
+           
+            </div>
+            </div>
+            </div>
+{% endblock %}

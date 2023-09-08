@@ -1,0 +1,49 @@
+{% extends "layout/appLayout.html" %}
+
+{% block title %}Category Create{% endblock %}
+
+{% block content %}
+
+
+
+	<div class="login-page bk-img">
+		<div class="form-content">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6 col-md-offset-3">
+						<h1 class="text-center text-bold text-light mt-4x">Sign in</h1>
+						<div class="well row pt-2x pb-3x bk-light">
+							<div class="col-md-8 col-md-offset-2">
+							<form method="post" id="login" action="/login">
+
+									<label for="email" class="text-uppercase text-sm">Email </label>
+									<input type="text" placeholder="email" name="email" id="email"  class="form-control mb">
+									<label for="password" class="text-uppercase text-sm">Password</label>
+									<input type="password" placeholder="Password" name="password" id="password" class="form-control mb">
+									<button class="btn btn-primary btn-block" name="login" type="submit">LOGIN</button>
+									{{ message }}
+								</form>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Loading Scripts -->
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap-select.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery.dataTables.min.js"></script>
+	<script src="js/dataTables.bootstrap.min.js"></script>
+	<script src="js/Chart.min.js"></script>
+	<script src="js/fileinput.js"></script>
+	<script src="js/chartData.js"></script>
+	<script src="js/main.js"></script>
+
+</body>
+
+</html>
+{% endblock %}

@@ -1,0 +1,155 @@
+  {% extends "layout/header.html" %}
+
+  {% block title %}Rent a Car{% endblock %}
+
+  {% block content %}
+
+  <section id="banner" class="banner-section">
+  <div class="container">
+    <div class="div_zindex">
+      <div class="row">
+        <div class="col-md-5 col-md-push-7">
+          <div class="banner_content">
+            <h1>Find the right car for you.</h1>
+            <p>We have more than a thousand cars for you to choose. </p>
+            <a href="#" class="btn">Read More <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a> </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </section>
+  <!-- /Banners -->
+
+
+  <!-- Resent Cat-->
+  <section class="section-padding gray-bg" id="vehicles">
+  <div class="container">
+    <div class="section-header text-center">
+      <h2>Find the Best <span>CarForYou</span></h2>
+      <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
+    </div>
+    <div class="row">
+
+      <!-- Nav tabs -->
+      <div class="recent-tab">
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active"><a href="#resentnewcar" role="tab" data-toggle="tab">New Car</a></li>
+        </ul>
+      </div>
+      <!-- Recently Listed New Cars -->
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="resentnewcar">
+
+          {% for vehicle in vehicles %}
+  <div class="col-list-3">
+
+  <div class="recent-car-list">
+
+  <div class="car-info-box">
+  <a href="/vehicles-details?id={{ vehicle.id }}">
+
+    {% set photo = vehicle.photo1[0] %}
+    <img src="/uploads/{{ photo }}" class="img-responsive" alt="image" ></a>
+
+  <ul>
+  <li><i class="fa fa-car" aria-hidden="true"></i>{{vehicle.fuel}}</li>
+  <li><i class="fa fa-calendar" aria-hidden="true"></i>{{vehicle.year}}</li>
+  <li><i class="fa fa-calendar" aria-hidden="true"></i>{{vehicle.transmission}}</li>
+  <li><i class="fa fa-calendar" aria-hidden="true"></i>{{vehicle.mileage}}km</li>
+  </ul>
+  </div>
+  <div class="car-title-m">
+  <h6>{{vehicle.name}}</h6>
+  <span class="price">{{ vehicle.price }} € /Dita</span>
+  </div>
+<!--  <div class="inventory_info_m">-->
+<!--  <p>{{vehicle.overview}}</p>-->
+<!--  </div>-->
+
+  </div>
+
+  </div>
+
+  {% endfor %}
+      </div>
+    </div>
+  </div>
+  </div>
+  </section>
+
+  <!-- /Resent Cat -->
+
+  <!-- Fun Facts-->
+  <section class="fun-facts-section">
+  <div class="container div_zindex">
+    <div class="row">
+      <div class="col-lg-3 col-xs-6 col-sm-3">
+        <div class="fun-facts-m">
+          <div class="cell">
+            <h2><i class="fa fa-calendar" aria-hidden="true"></i>40+</h2>
+            <p>Years In Business</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xs-6 col-sm-3">
+        <div class="fun-facts-m">
+          <div class="cell">
+            <h2><i class="fa fa-car" aria-hidden="true"></i>1200+</h2>
+            <p>New Cars For Sale</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xs-6 col-sm-3">
+        <div class="fun-facts-m">
+          <div class="cell">
+            <h2><i class="fa fa-car" aria-hidden="true"></i>1000+</h2>
+            <p>Used Cars For Sale</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-xs-6 col-sm-3">
+        <div class="fun-facts-m">
+          <div class="cell">
+            <h2><i class="fa fa-user-circle-o" aria-hidden="true"></i>600+</h2>
+            <p>Satisfied Customers</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Dark Overlay-->
+  <div class="dark-overlay"></div>
+  </section>
+  <!-- /Fun Facts-->
+
+
+
+
+
+  <!--Back to top-->
+  <div id="back-top" class="back-top"> <a href="#top"><i class="fa fa-angle-up" aria-hidden="true"></i> </a> </div>
+  <!--/Back to top-->
+
+
+
+  <!-- Scripts -->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/bootstrap.min.js"></script>
+  <script src="assets/js/interface.js"></script>
+  <!--Switcher-->
+  <script src="assets/switcher/js/switcher.js"></script>
+  <!--bootstrap-slider-JS-->
+  <script src="assets/js/bootstrap-slider.min.js"></script>
+  <!--Slider-JS-->
+  <script src="assets/js/slick.min.js"></script>
+  <script src="assets/js/owl.carousel.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+  </body>
+
+  </html>
+
+  {% include 'layout/footer.html' %}
+  {% endblock %}

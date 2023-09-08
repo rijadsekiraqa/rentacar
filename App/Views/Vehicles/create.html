@@ -1,0 +1,238 @@
+{% extends "layout/appLayout.html" %}
+
+{% block title %}Vehicle | Create{% endblock %}
+
+{% block content %}
+{% include 'layout/sidenav.html' %}
+<div class="content-wrapper">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-12">
+            
+                <h2 class="page-title">Regjistro Veturen</h2>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Informatat Bazike</div>
+                            <div class="panel-body">
+                            <form method="post" action="/vehicles-store" class="form-horizontal" enctype="multipart/form-data">
+                            <div class="form-group">
+                            <label class="col-sm-2 control-label">Emri i Vetures<span style="color:red">*</span></label>
+                            <div class="col-sm-4">
+                            <input type="text" name="name" class="form-control" required>
+                            </div>
+                            <label class="col-sm-2 control-label">Marka<span style="color:red">*</span></label>
+                            <div class="col-sm-4">
+                            <select name="brand_id" class="selectpicker">
+                            <option value=""> Select </option>
+                            {% for brand in brands %}
+                            <option value="{{ brand.id }}">{{ brand.name }}</option>
+                            {% endfor %}
+
+
+                    </select>
+                    </div>
+                    </div>
+                                    
+<div class="hr-dashed"></div>
+<div class="form-group">
+<label class="col-sm-2 control-label">Pershkrimi i Vetures<span style="color:red">*</span></label>
+<div class="col-sm-10">
+<textarea class="form-control" name="overview" rows="3" required></textarea>
+</div>
+</div>
+
+<div class="form-group">
+<label class="col-sm-2 control-label">Zgjedh Marshin<span style="color:red">*</span></label>
+<div class="col-sm-4">
+<select class="selectpicker" name="transmission" required>
+<option value=""> Select </option>    
+<option value="Automatik">Automatik</option>
+<option value="Manual">Manual</option>
+</select>
+</div>
+<label class="col-sm-2 control-label">Zgjedh Karburantin<span style="color:red">*</span></label>
+<div class="col-sm-4">
+<select class="selectpicker" name="fuel" required>
+<option value=""> Select </option>
+
+<option value="Benzin">Benzin</option>
+<option value="Diesel">Diesel</option>
+<option value="Hybrid">Hybrid</option>
+</select>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label">Kubikazha<span style="color:red">*</span></label>
+<div class="col-sm-4">
+<input type="text" name="cubical" class="form-control" required>
+</div>
+<label class="col-sm-2 control-label">Qmimi(per 1 dite)<span style="color:red">*</span></label>
+<div class="col-sm-4">
+<input type="text" name="price" class="form-control" required>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label">Fuqia(HP)<span style="color:red">*</span></label>
+<div class="col-sm-4">
+<input type="text" name="power" class="form-control" required>
+</div>
+<label class="col-sm-2 control-label">Kilometrat<span style="color:red">*</span></label>
+<div class="col-sm-4">
+<input type="text" name="mileage" class="form-control" required>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label">Viti Prodhimit<span style="color:red">*</span></label>
+<div class="col-sm-4">
+<input type="number" min="1999" max="2023" name="year" class="form-control" required>
+</div>
+<label class="col-sm-2 control-label">Kapaciteti Ulseve<span style="color:red">*</span></label>
+<div class="col-sm-4">
+<input type="text" name="seat" class="form-control" required>
+</div>
+</div>
+<div class="hr-dashed"></div>
+<div class="form-group">
+<div class="col-sm-12">
+<h4><b>Ngarko Fotot</b></h4>
+</div>
+</div>
+<div class="form-group">
+    <div class="col-sm-4">
+    Foto 1 <span style="color:red">*</span><input type="file" name="photo1" required>
+    </div>
+    <div class="col-sm-4">
+    Foto 2<span style="color:red">*</span><input type="file" name="photo2" required>
+    </div>
+    <div class="col-sm-4">
+    Foto 3<span style="color:red">*</span><input type="file" name="photo3" required>
+    </div>
+    </div>
+    
+    
+    <div class="form-group">
+    <div class="col-sm-4">
+    Foto 4<span style="color:red">*</span><input type="file" name="photo4" required>
+    </div>
+    <div class="col-sm-4">
+    Foto 5<input type="file" name="photo5" required>
+    </div>
+
+</div>
+<div class="hr-dashed"></div>
+</form>
+</div>
+</div>
+</div>
+</div>
+                    
+
+            <div class="row">
+            <div class="col-md-12">
+            <div class="panel panel-default">
+            <div class="panel-heading">Accessories</div>
+            <div class="panel-body">
+
+
+            <div class="form-group">
+            <div class="col-sm-3">
+            <div class="checkbox checkbox-inline">
+            <input type="checkbox" id="airconditioner" name="airconditioner">
+            <label for="airconditioner">AC</label>
+            </div>
+            </div>
+            <div class="col-sm-3">
+            <div class="checkbox checkbox-inline">
+            <input type="checkbox" id="powerdoorlocks" name="powerdoorlocks">
+            <label for="powerdoorlocks"> Ulse me nxemje </label>
+            </div>
+            </div>
+            <div class="col-sm-3">
+            <div class="checkbox checkbox-inline">
+            <input type="checkbox" id="antilockbrakingsys" name="antilock">
+            <label for="antilockbrakingsys">ABS</label>
+            </div>
+            </div>
+            <div class="checkbox checkbox-inline">
+            <input type="checkbox" id="brakeassist" name="brakeassist">
+            <label for="brakeassist"> Asist Frenimi	 </label>
+            </div>
+            </div>
+            <div class="form-group">
+            <div class="col-sm-3">
+            <div class="checkbox checkbox-inline">
+            <input type="checkbox" id="powersteering" name="powersteering">
+            <label for="powersteering"> Pasqyre Elektrike</label>
+            </div>
+            </div>
+            <div class="col-sm-3">
+            <div class="checkbox checkbox-inline">   
+            <input type="checkbox" id="driverairbag" name="driverairbag">
+            <label for="driverairbag">Driver Airbag</label>
+            </div>
+            </div>
+            <div class="col-sm-3">
+            <div class="checkbox checkbox-inline">  
+            <input type="checkbox" id="passengerairbag" name="passengerairbag">
+            <label for="passengerairbag"> Passenger Airbag </label>
+            </div></div>
+            <div class="checkbox checkbox-inline">
+            <input type="checkbox" id="powerwindow" name="powerwindows">
+            <label for="powerwindow"> Dritare Elektrike </label>
+            </div>
+            </div>
+
+
+            <div class="form-group">
+            <div class="col-sm-3">
+            <div class="checkbox checkbox-inline">
+            <input type="checkbox" id="cdplayer" name="cdplayer">
+            <label for="cdplayer"> Navigacion </label>
+            </div>
+            </div>
+            <div class="col-sm-3">
+            <div class="checkbox h checkbox-inline">
+            <input type="checkbox" id="centrallocking" name="centralock">
+            <label for="centrallocking">Mbyllje Qendrore</label>
+            </div></div>
+            <div class="col-sm-3">
+            <div class="checkbox checkbox-inline">
+            <input type="checkbox" id="crashcensor" name="crashsensor">
+            <label for="crashcensor"> Senzora Parkimi </label>
+            </div></div>
+            <div class="col-sm-3">
+            <div class="checkbox checkbox-inline">
+            <input type="checkbox" id="leatherseats" name="leatherseats">
+            <label for="leatherseats"> Karrikat Lekure </label>
+            </div>
+            </div>
+            </div>
+                                 
+            <div class="form-group">
+                <div class="col-sm-8 col-sm-offset-2">
+                   <button class="btn btn-default" type="reset">Cancel</button>
+                   <button class="btn btn-primary" name="submit" type="submit">Save changes</button>
+                </div>
+            </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            
+
+            </div>
+        </div>
+        
+    
+
+    </div>
+</div>
+
+
+{% endblock %}

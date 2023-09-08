@@ -1,0 +1,94 @@
+{% extends "layout/header.html" %}
+{% block title %}Library | Dashboard{% endblock %}
+{% block content %}
+
+<section class="page-header profile_page">
+    <div class="container">
+      <div class="page-header_wrap">
+        <div class="page-heading">
+          <h1>Your Profile</h1>
+        </div>
+        <ul class="coustom-breadcrumb">
+          <li><a href="#">Home</a></li>
+          <li>Profile</li>
+        </ul>
+      </div>
+    </div>
+    <!-- Dark Overlay-->
+    <div class="dark-overlay"></div>
+  </section>
+  <!-- /Page Header--> 
+  
+
+  <section class="user_profile inner_pages">
+    <div class="container">
+      <div class="user_profile_info gray-bg padding_4x4_40">
+        <div class="upload_user_logo"> <img src="assets/images/dealer-logo.jpg" alt="image">
+        </div>
+        <div class="dealer_info">
+          <h5>{{client.name}} {{client.surname}}</h5>
+          <p>{{client.address}}<br>
+          &nbsp;</p>
+        </div>
+      </div>
+    
+      <div class="row">
+        <div class="col-md-3 col-sm-3">
+            {% include 'layout/sidenavclient.html' %}
+        <div class="col-md-6 col-sm-8">
+          <div class="profile_wrap">
+            <h5 class="uppercase underline">General Settings</h5>
+              <form method="post" action="/clients-update">
+                  <div class="form-group">
+                      <label class="control-label">Reg Date {{ client.created_at }}</label>
+                  </div>
+                  <div class="form-group">
+                      <label class="control-label">Last Update at {{ client.updated_at }}</label>
+                  </div>
+                  <div class="form-group">
+                      <label class="control-label">Full Name</label>
+                      <input type="hidden" value="{{ client.id }}" name="id">
+                      <input class="form-control white_bg" name="name" value="{{ client.name }} {{ client.surname }}" id="name" type="text">
+                  </div>
+                  <div class="form-group">
+                      <label class="control-label">Email Address</label>
+                      <input class="form-control white_bg" name="email" value="{{ client.email }}" id="email" type="email" required readonly>
+                  </div>
+                  <div class="form-group">
+                      <label class="control-label">Phone Number</label>
+                      <input class="form-control white_bg" name="phone" value="{{ client.phone }}" id="phone" type="email" required readonly>
+                  </div>
+                  <div class="form-group">
+                      <label class="control-label">Address</label>
+                      <input class="form-control white_bg" name="address" value="{{ client.address }}" id="address" type="address" required readonly>
+                  </div>
+                  <div class="form-group">
+                      <button type="submit" name="updateprofile" class="btn btn-danger">Save Changes <span class="angle_arrow"><i class="fa fa-angle-right" aria-hidden="true"></i></span></button>
+                  </div>
+              </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

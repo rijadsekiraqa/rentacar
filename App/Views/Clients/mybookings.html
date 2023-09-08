@@ -1,0 +1,92 @@
+{% extends "layout/header.html" %}
+{% block title %}Library | Dashboard{% endblock %}
+{% block content %}
+<section class="page-header profile_page">
+    <div class="container">
+        <div class="page-header_wrap">
+            <div class="page-heading">
+                <h1>My Booking</h1>
+            </div>
+            <ul class="coustom-breadcrumb">
+                <li><a href="#">Home</a></li>
+                <li>My Booking</li>
+            </ul>
+        </div>
+    </div>
+    <div class="dark-overlay"></div>
+</section>
+<!-- /Page Header-->
+
+
+<section class="user_profile inner_pages">
+    <div class="container">
+        <div class="user_profile_info gray-bg padding_4x4_40">
+            <div class="upload_user_logo"> <img src="assets/images/dealer-logo.jpg" alt="image">
+            </div>
+            <div class="dealer_info">
+                <h5></h5>
+                <p><br></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-sm-3">
+                {% include 'layout/sidenavclient.html' %}
+                <div class="col-md-6 col-sm-8">
+                    <div class="profile_wrap">
+                        <h5 class="uppercase underline">My Bookings </h5>
+                        <div class="my_vehicles_list">
+                            <ul class="vehicle_listing">
+                                {% for booking in bookings %}
+                                <li>
+                                    <div class="vehicle_img">
+                                            <a href="/vehicles-details?id={{ booking.vehicle.id }}">
+                                                {% if booking.vehicle and booking.vehicle.decodedPhotos is iterable and booking.vehicle.decodedPhotos|length > 0 %}
+                                                {% set firstPhoto = booking.vehicle.decodedPhotos[0] %}
+                                                <img src="uploads/{{ firstPhoto }}" alt="Vehicle Photo">
+                                                {% endif %}
+                                            </a> </div>
+                                    <div class="vehicle_title">
+                                        <h6><a href="/vehicles-details?id={{ booking.vehicle.id }}">{{ booking.vehicle.name }}</a></h6>
+                                        <p>
+                                            <b>From Date:</b>{{booking.fromdate}}<br>
+                                            <b>To Date:</b> {{booking.todate}}<br>
+                                            <b>Qmimi Total:</b> {{booking.total}}</p>
+                                    </div>
+                                    <div class="vehicle_status">
+                                        {% if booking.status == 'Confirmed' %}
+                                        <a href="#" class="btn outline btn-xs active-btn">Confirmed</a>
+                                        {% elseif booking.status == 'Canceled' %}
+                                        <a href="#" class="btn btn-danger btn-xs">Cancelled</a>
+                                        {% else %}
+                                        <a href="#" class="btn btn-warning btn-xs">Not Confirmed yet</a>
+                                        {% endif %}
+                                        <div class="clearfix"></div>
+                                    </div>
+
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+
+
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/interface.js"></script>
+<!--Switcher-->
+<script src="assets/switcher/js/switcher.js"></script>
+<!--bootstrap-slider-JS-->
+<script src="assets/js/bootstrap-slider.min.js"></script>
+<!--Slider-JS-->
+<script src="assets/js/slick.min.js"></script>
+<script src="assets/js/owl.carousel.min.js"></script>
+</body>
+</html>
+
+
+{% endblock %}

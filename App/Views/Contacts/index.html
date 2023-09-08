@@ -1,0 +1,71 @@
+{% extends "layout/appLayout.html" %}
+
+{% block title %}Contact  |  View{% endblock %}
+
+{% block content %}
+{% include 'layout/sidenav.html' %}
+<div class="content-wrapper">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <h2 class="page-title">Menagjo Kontakt Formen</h2>
+
+                <!-- Zero Configuration Table -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">Kontakt Forma</div>
+                    <div class="panel-body">
+                
+                        <table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                
+                                    
+                                
+                                    <th>Emri</th>
+                                    <th>Email</th>
+                                    <th>Telefoni</th>
+                                    <th>Mesazhi</th>
+                                    <th>Perditeso</th>
+                                    <th>Fshije</th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
+                                {% for contact in contacts %}
+                                <tr>
+                                    <td>{{ contact.name }}</td>
+                                    <td>{{ contact.email }}</td>
+                                    <td>{{ contact.phone }}</td>
+                                    <td>{{ contact.message }}</td>
+                                    <td> <form method='post' action='/contacts-edit'>
+                                        <input type='hidden' name='id' value='{{contact.id}}'>
+                                        <input type='submit' value='Perditeso'>
+                                    </form></td>
+                                    <td>
+                                        <form method='post' action='/contacts-delete'>
+                                        <input type='hidden' name='id' value='{{contact.id}}'>
+                                        <input type='submit' value='Fshije'>
+                                      </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                
+
+                    </div>
+                </div>
+
+            
+            
+
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+{% endblock %}

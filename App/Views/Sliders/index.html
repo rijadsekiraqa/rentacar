@@ -1,0 +1,69 @@
+{% extends "layout/appLayout.html" %}
+
+{% block title %}Slider | View{% endblock %}
+
+{% block content %}
+{% include 'layout/sidenav.html' %}
+<div class="content-wrapper">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <h2 class="page-title">Manage Sliders</h2>
+
+                <!-- Zero Configuration Table -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">Veturat e Regjistruara</div>
+                    <div class="panel-body">
+
+                        <table id="zctb" class="display table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Foto</th>
+                                <th>Title </th>
+                                <th>Paragraph</th>
+                                <th>Perditeso</th>
+                                <th>Fshije</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            {% for post in posts %}
+
+                            <tr>
+                                <td>{{ post.id }}</td>
+                                <td>{{ post.image }}</td>
+                                <td>{{ post.title }}</td>
+                                <td>{{ post.paragraph }}</td>
+
+                                <td> <form method='get' action='/sliders-edit'>
+                                    <input type='hidden' name='id' value='{{post.id}}'>
+                                    <input type='submit' value='Perditeso'>
+                                </form></td>
+                                <td><form method='post' action='/sliders-delete'>
+                                    <input type='hidden' name='id' value='{{vehicle.id}}'>
+                                    <input type='submit' value='Fshije'>
+                                </form></td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+
+
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+{% endblock %}

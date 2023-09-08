@@ -1,0 +1,74 @@
+{% extends "layout/appLayout.html" %}
+
+{% block title %}Manage | Bookings{% endblock %}
+
+{% block content %}
+{% include 'layout/sidenav.html' %}
+<div class="content-wrapper">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <h2 class="page-title">Manage Bookings</h2>
+
+                <!-- Zero Configuration Table -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">Bookings Info</div>
+                    <div class="panel-body">
+                        {% if message %}
+                        <div class="succWrap">{{ message }}</div>
+                        {% endif %}
+                        <table id="zctb" class="display table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                <th>#</th>
+                                    <th>Name</th>
+                                    <th>Vehicle</th>
+                                    <th>From Date</th>
+                                    <th>To Date</th>
+                                    <th>Total</th>
+                                    <th>Statusi</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                          
+                            <tbody>
+                                {% for booking in bookings %}
+               
+                                <tr>
+                                    <td>{{ booking.id }}</td>
+                                    <td>{{ booking.name }}</td>
+                                    <td><a href="/vehicles-edit?id={{ booking.vehicle.id }}">{{ booking.vehicle.name }}</a></td>
+                                    <td>{{ booking.fromdate }}</td>
+                                    <td>{{ booking.todate }}</td>
+                                    <td>{{ booking.total }}</td>
+                                    <td>{{ booking.status }}</td>
+
+
+                                    <td>
+                                        <a href="/bookings-confirm?id={{ booking.id }}" onclick="return confirm('Do you really want to Confirm this booking')"> Confirm</a> /
+                                        <a href="/bookings-cancel?id={{ booking.id }}" onclick="return confirm('Do you really want to Cancel this Booking')"> Cancel</a>
+                                    </td>
+
+                                </tr>
+                               
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                
+
+                    </div>
+                </div>
+
+            
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

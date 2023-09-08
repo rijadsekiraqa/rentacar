@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="keywords" content="">
+<meta name="description" content="">
+<title>{% block title %}{% endblock %}</title>
+<!--Bootstrap -->
+<link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="assets/css/style.css" type="text/css">
+<link rel="stylesheet" href="assets/css/owl.carousel.css" type="text/css">
+<link rel="stylesheet" href="assets/css/owl.transitions.css" type="text/css">
+<link href="assets/css/slick.css" rel="stylesheet">
+<link href="assets/css/bootstrap-slider.min.css" rel="stylesheet">
+<link href="assets/css/font-awesome.min.css" rel="stylesheet">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/images/favicon-icon/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/images/favicon-icon/apple-touch-icon-114-precomposed.html">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/images/favicon-icon/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed" href="assets/images/favicon-icon/apple-touch-icon-57-precomposed.png">
+<link rel="shortcut icon" href="assets/images/favicon-icon/favicon.png">
+<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+
+</head>
+<body>
+<header>
+  <div class="default-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-3 col-md-2">
+          <div class="logo"> <a href="index.php"><img src="assets/images/logg.png" alt="image"/></a> </div>
+        </div>
+        <div class="col-sm-9 col-md-10">
+          <div class="header_info">
+
+
+
+            <div class="header_widgets">
+              <div class="circle_icon"> <i class="fa fa-envelope" aria-hidden="true"></i> </div>
+              <p class="uppercase_text">Email </p>
+              <a href="mailto:info@example.com">rentacar@gmail.com</a> </div>
+            <div class="header_widgets">
+              <div class="circle_icon"> <i class="fa fa-phone" aria-hidden="true"></i> </div>
+              <p class="uppercase_text">Phone</p>
+              <a href="tel:61-1234-5678-09">044 000-000</a> </div>
+              {% include 'Auth/userlogin.html' %}
+              {% if loggedIn %}
+              "Welcome To Car rental portal"
+              {% else %}
+              <a href="#loginform" class="btn btn-danger btn-xs uppercase" data-toggle="modal" data-dismiss="modal">Login / Register</a>
+              {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Navigation -->
+  <nav id="navigation_bar" class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <button id="menu_slide" data-target="#navigation" aria-expanded="false" data-toggle="collapse" class="navbar-toggle collapsed" type="button"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+      </div>
+      <div class="header_wrap">
+        <div class="user_login">
+            <ul>
+                <li class="dropdown">
+                    <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-user-circle" aria-hidden="true"></i>
+                        {% if loggedIn %}
+                        {{ client.name }}
+                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+
+                            <li><a href="/profileclient">Profile Settings</a></li>
+                            <li><a href="/update-password">Update Password</a></li>
+                            <li><a href="/my-bookings">My Booking</a></li>
+                            <li><a href="/logouts">Sign Out</a></li>
+
+
+                    </ul>
+                    {% else %}
+                    <ul class="dropdown-menu">
+
+                        <li><a href="/profileclient">Profile Settings</a></li>
+                        <li><a href="/update-password">Update Password</a></li>
+                        <li><a href="/my-bookings">My Booking</a></li>
+                        <li><a href="/logouts">Sign Out</a></li>
+
+
+                    </ul>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+        <div class="header_search">
+            <div id="search_toggle"><i class="fa fa-search" aria-hidden="true"></i></div>
+            <form action="#" method="get" id="header-search-form">
+                <input type="text" placeholder="Search..." class="form-control">
+                <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+            </form>
+        </div>
+    </div>
+      <div class="collapse navbar-collapse" id="navigation">
+        <ul class="nav navbar-nav">
+          <li><a href="index.php">Home</a></li>
+          <li><a href="#vehicles">Car Listing</a>
+          <li><a href="/contact-us">Contact Us</a></li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+</header>
+
+
+{% block content %}
+{% endblock %}

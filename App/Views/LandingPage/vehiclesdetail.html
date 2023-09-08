@@ -1,0 +1,278 @@
+{% extends "layout/header.html" %}
+
+{% block title %}Rent a Car{% endblock %}
+
+{% block content %}
+
+<section id="listing_img_slider">
+    {% for photo in vehicle.photo1 %} 
+    <div><img src="/uploads/{{ photo }}" class="img-responsive" alt="image" width="900" height="560"></div>
+    {% endfor %}
+  </section>
+<!--Listing-detail-->
+<section class="listing-detail">
+  <div class="container">
+    <div class="listing_detail_head row">
+      <div class="col-md-9">
+        <h2>{{vehicle.name}}</h2>
+      </div>
+      <div class="col-md-3">
+        <div class="price_info">
+          <p>{{vehicle.price}}$</p>Per Day
+         
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-9">
+        <div class="main_features">
+          <ul>
+          
+            <li> <i class="fa fa-calendar" aria-hidden="true"></i>
+              <h5>Viti i Prodhimit</h5>
+              <p> {{vehicle.year}} </p>
+            </li>
+            <li> <i class="fa-solid fa-gas-pump" aria-hidden="true"></i>
+              <h5>Karburanti</h5>
+              <p>{{vehicle.fuel}}</p>
+            </li>
+       
+            <li> <i class="fa fa-user-plus" aria-hidden="true"></i>
+              <h5>Kubikazha</h5>
+              <p>{{vehicle.cubical}}</p>
+            </li>
+            <li> <i class="fa fa-user-plus" aria-hidden="true"></i>
+                <h5>Marshi</h5>
+                <p>{{vehicle.transmission}}</p>
+            </li>
+
+            <li> <i class="fa fa-user-plus" aria-hidden="true"></i>
+                <h5>Fuqia</h5>
+                <p>{{vehicle.power}} HP</p>
+              </li>
+
+            <li> <i class="fa fa-user-plus" aria-hidden="true"></i>
+                <h5>Kilometrat</h5>
+                <p>{{vehicle.mileage}}</p>
+            </li>
+
+              
+          </ul>
+        </div>
+       
+        <div class="listing_more_info">
+          <div class="listing_detail_wrap"> 
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs gray-bg" role="tablist">
+              <li role="presentation" class="active"><a href="#vehicle-overview " aria-controls="vehicle-overview" role="tab" data-toggle="tab">Vehicle Overview </a></li>
+          
+              <li role="presentation"><a href="#accessories" aria-controls="accessories" role="tab" data-toggle="tab">Accessories</a></li>
+            </ul>
+            
+            <!-- Tab panes -->
+            <div class="tab-content"> 
+              <!-- vehicle-overview -->
+              <div role="tabpanel" class="tab-pane active" id="vehicle-overview">
+                
+                <p>{{ vehicle.overview }}</p>
+              </div>
+              
+              
+              <!-- Accessories -->
+              <div role="tabpanel" class="tab-pane" id="accessories"> 
+                <!--Accessories-->
+                <table>
+                  <thead>
+                    <tr>
+                      <th colspan="2">Accessories</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                        <td>AC</td>
+                        
+                        {% if vehicle.airconditioner == 1 %}
+                          <td><i class="fa fa-check" aria-hidden="true"></i></td>
+                        {% else %}
+                          <td><i class="fa fa-close" aria-hidden="true"></i></td>
+                        {% endif %}
+                      </tr>
+
+<tr>
+<td>ABS</td>
+{% if vehicle.antilock == 1 %}
+<td><i class="fa fa-check" aria-hidden="true"></i></td>
+{% else %}
+<td><i class="fa fa-close" aria-hidden="true"></i></td>
+{% endif %}
+                    </tr>
+
+<tr>
+<td>Pasqyre Elektrike</td>
+{% if vehicle.powersteering == 1 %}
+<td><i class="fa fa-check" aria-hidden="true"></i></td>
+{% else %}
+<td><i class="fa fa-close" aria-hidden="true"></i></td>
+{% endif %}
+</tr>
+                   
+
+<tr>
+
+<td>Dritare Elektrike</td>
+
+{% if vehicle.powerwindows == 1 %}
+<td><i class="fa fa-check" aria-hidden="true"></i></td>
+{% else %}
+<td><i class="fa fa-close" aria-hidden="true"></i></td>
+{% endif %}
+</tr>
+                   
+ <tr>
+<td>Navigacion</td>
+{% if vehicle.cdplayer == 1 %}
+<td><i class="fa fa-check" aria-hidden="true"></i></td>
+{% else %}
+<td><i class="fa fa-close" aria-hidden="true"></i></td>
+{% endif %}
+</tr>
+
+<tr>
+<td>Karrikat Lekure</td>
+{% if vehicle.leatherseats == 1 %}
+<td><i class="fa fa-check" aria-hidden="true"></i></td>
+{% else %}
+<td><i class="fa fa-close" aria-hidden="true"></i></td>
+{% endif %}
+</tr>
+
+<tr>
+<td>Mbyllje Qendrore</td>
+{% if vehicle.centralock == 1 %}
+<td><i class="fa fa-check" aria-hidden="true"></i></td>
+{% else %}
+<td><i class="fa fa-close" aria-hidden="true"></i></td>
+{% endif %}
+</tr>
+
+<tr>
+<td>Ulse me nxemje</td>
+{% if vehicle.powerdoorlocks == 1 %}
+<td><i class="fa fa-check" aria-hidden="true"></i></td>
+{% else %}
+<td><i class="fa fa-close" aria-hidden="true"></i></td>
+{% endif %}
+                    </tr>
+                    <tr>
+<td>Asist Frenimi</td>
+{% if vehicle.brakeassist == 1 %}
+<td><i class="fa fa-check" aria-hidden="true"></i></td>
+{% else %}
+<td><i class="fa fa-close" aria-hidden="true"></i></td>
+{% endif %}
+</tr>
+
+<tr>
+<td>Driver Airbag</td>
+{% if vehicle.driverairbag == 1 %}
+<td><i class="fa fa-check" aria-hidden="true"></i></td>
+{% else %}
+<td><i class="fa fa-close" aria-hidden="true"></i></td>
+{% endif %}
+ </tr>
+ 
+ <tr>
+ <td>Passenger Airbag</td>
+ {% if vehicle.passengerairbag == 1 %}
+<td><i class="fa fa-check" aria-hidden="true"></i></td>
+{% else %}
+<td><i class="fa fa-close" aria-hidden="true"></i></td>
+{% endif %}
+</tr>
+
+<tr>
+<td>Senzora Parkimi</td>
+{% if vehicle.crashsensor == 1 %}
+<td><i class="fa fa-check" aria-hidden="true"></i></td>
+{% else %}
+<td><i class="fa fa-close" aria-hidden="true"></i></td>
+{% endif %}
+</tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+
+   
+      </div>
+      
+      <!--Side-Bar-->
+      <aside class="col-md-3">
+      
+       
+        <div class="sidebar_widget">
+          <div class="widget_heading">
+            <h5><i class="fa fa-envelope" aria-hidden="true"></i>Rezervo Tani</h5>
+          </div>
+            <form method="post" id="bookingForm" action="/bookings-store?id={{ vehicle.id }}">
+              
+            <div class="form-group">
+              <input type="text" class="form-control" name="name" placeholder="Emri dhe Mbiemri" required>
+            </div>
+            <div class="form-group">
+                <input type="hidden" name="currentdate" value="">
+              <input type="date" class="form-control" name="fromdate" placeholder="From Date(dd/mm/yyyy)" required>
+            </div>
+            <div class="form-group">
+              <input type="date" class="form-control" name="todate" placeholder="To Date(dd/mm/yyyy)" required>
+            </div>
+              <div class="dynamicInputContainer form-group">
+                  <input type="hidden" name="price" value="">
+                  <!-- Dynamic input fields will be added here -->
+              </div>
+              <div class="form-group">
+                  {% if loggedIn %}
+                  <input type="submit" class="btn btn-danger" name="submit" value="Book Now">
+                  {% else %}
+                  <a href="/user-login" class="btn btn-danger btn-xs uppercase" data-toggle="modal" data-dismiss="modal">Login For Book</a>
+                  {% endif %}
+              </div>
+          </form>
+        </div>
+      </aside>
+      <!--/Side-Bar--> 
+    </div>
+    
+   
+
+    
+  </div>
+</section>
+
+
+<!--Back to top-->
+<div id="back-top" class="back-top"> <a href="#top"><i class="fa fa-angle-up" aria-hidden="true"></i> </a> </div>
+<!--/Back to top--> 
+
+
+
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script> 
+<script src="assets/js/interface.js"></script> 
+<script src="assets/js/dynamicallyfield.js"></script>
+<script src="assets/js/bootstrap-slider.min.js"></script> 
+<script src="assets/js/slick.min.js"></script> 
+<script src="assets/js/owl.carousel.min.js"></script>
+
+
+</body>
+</html>
+
+
+
+{% include 'layout/footer.html' %}
+{% endblock %}
