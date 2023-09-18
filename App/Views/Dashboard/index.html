@@ -1,4 +1,4 @@
-{% extends "layout/appLayout.html" %}
+{% extends "layout/headeradmin.html" %}
 {% block title %}Dashboard | Manage{% endblock %}
 {% block content %}
 {% include 'layout/sidenav.html' %}
@@ -18,10 +18,21 @@
                                     <div class="panel-body bk-primary text-light">
                                         <div class="stat-panel text-center">
                                             <div class="stat-panel-number h1">{{userCount}}</div>
-                                            <div class="stat-panel-title text-uppercase">Perdoruesit</div>
+                                            <div class="stat-panel-title text-uppercase">Administratoret</div>
                                         </div>
                                     </div>
                                     <a href="/users" class="block-anchor panel-footer text-center">Shiko Perdoruesit &nbsp;<i class="fa fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="panel panel-default">
+                                    <div class="panel-body bk-primary text-light">
+                                        <div class="stat-panel text-center">
+                                            <div class="stat-panel-number h1">{{clientCount}}</div>
+                                            <div class="stat-panel-title text-uppercase">Klientat</div>
+                                        </div>
+                                    </div>
+                                    <a href="/clients" class="block-anchor panel-footer text-center">Shiko Perdoruesit &nbsp;<i class="fa fa-arrow-right"></i></a>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -53,6 +64,17 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="panel panel-default">
+                                    <div class="panel-body bk-primary text-light">
+                                        <div class="stat-panel text-center">
+                                            <div class="stat-panel-number h1">{{ bookingCount }}</div>
+                                            <div class="stat-panel-title text-uppercase">Rezervimet</div>
+                                        </div>
+                                    </div>
+                                    <a href="/bookings" class="block-anchor panel-footer text-center">Shiko Perdoruesit &nbsp;<i class="fa fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="panel panel-default">
                                     <div class="panel-body bk-info text-light">
                                         <div class="stat-panel text-center">
 
@@ -76,5 +98,6 @@
     </div>
 </div>
 </div>
-    
+
+{% include 'layout/footeradmin.html' %}
 {% endblock %}

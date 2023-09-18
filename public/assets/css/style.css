@@ -3819,7 +3819,7 @@ table.info-tabel tr td {
 .vehicle_img {
   float: left;
   margin-right: 22px;
-  width: 22%;
+  width: 30%;
 }
 .vehicle_img img {
 	max-width:100%;

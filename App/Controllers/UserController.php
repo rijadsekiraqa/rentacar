@@ -48,7 +48,7 @@ class UserController extends Controller
         $user->email = $_POST['email'];
         $user->password = $_POST['password'];
         $user->save();
-        header("Location: /users");
+        header("Location: /admins");
     }
 
     public function edit()
@@ -58,7 +58,7 @@ class UserController extends Controller
             header('Location: /login-form');
             exit;
         }
-        $id = $_POST['id'];
+        $id = $_GET['id'];
         $user = User::findOrFail($id);
         View::renderTemplate('Users/edit.html', ['user'=>$user]);
     }
@@ -72,15 +72,15 @@ class UserController extends Controller
         $user->email = $_POST['email'];
         $user->password = $_POST['password'];
         $user->save();
-        header("Location: /users");
+        header("Location: /admins");
     }
   
     public function delete()
     {
-        $id = $_POST['id'];
+        $id = $_GET['id'];
         $user = User::find($id);
         $user->delete();
-        header("Location: /users");
+        header("Location: /admins");
     }
 
     public function loginForm()

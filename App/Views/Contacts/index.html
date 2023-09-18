@@ -1,4 +1,4 @@
-{% extends "layout/appLayout.html" %}
+{% extends "layout/headeradmin.html" %}
 
 {% block title %}Contact  |  View{% endblock %}
 
@@ -27,8 +27,7 @@
                                     <th>Email</th>
                                     <th>Telefoni</th>
                                     <th>Mesazhi</th>
-                                    <th>Perditeso</th>
-                                    <th>Fshije</th>
+                                    <th>Vepro</th>
                                 </tr>
                             </thead>
                             
@@ -39,15 +38,8 @@
                                     <td>{{ contact.email }}</td>
                                     <td>{{ contact.phone }}</td>
                                     <td>{{ contact.message }}</td>
-                                    <td> <form method='post' action='/contacts-edit'>
-                                        <input type='hidden' name='id' value='{{contact.id}}'>
-                                        <input type='submit' value='Perditeso'>
-                                    </form></td>
-                                    <td>
-                                        <form method='post' action='/contacts-delete'>
-                                        <input type='hidden' name='id' value='{{contact.id}}'>
-                                        <input type='submit' value='Fshije'>
-                                      </form>
+                                    <td><a href="/contacts-edit?id={{ contact.id }}"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
+                                        <a href="/contacts-delete?id={{ contact.id }}" onclick="return confirm('Do you want to delete');"><i class="fa fa-close"></i></a></td>
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -68,4 +60,5 @@
     </div>
 </div>
 </div>
+{% include 'layout/footeradmin.html' %}
 {% endblock %}

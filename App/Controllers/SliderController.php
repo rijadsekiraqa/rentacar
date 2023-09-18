@@ -2,6 +2,7 @@
 namespace App\Controllers;
 
     use App\Helper\Session;
+    use App\Models\Client;
     use App\Models\Post;
     use App\Models\Vehicle;
     use \Core\View;
@@ -84,6 +85,14 @@ namespace App\Controllers;
 
 
 
+    }
+
+    public function delete()
+    {
+        $id = $_GET['id'];
+        $post = Post::find($id);
+        $post->delete();
+        header("Location: /sliders");
     }
 
 

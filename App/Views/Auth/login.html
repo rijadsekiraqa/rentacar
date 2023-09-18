@@ -1,4 +1,4 @@
-{% extends "layout/appLayout.html" %}
+{% extends "layout/headeradmin.html" %}
 
 {% block title %}Category Create{% endblock %}
 
@@ -21,7 +21,12 @@
 									<label for="password" class="text-uppercase text-sm">Password</label>
 									<input type="password" placeholder="Password" name="password" id="password" class="form-control mb">
 									<button class="btn btn-primary btn-block" name="login" type="submit">LOGIN</button>
+
+								{% if message is not empty %}
+								<div class="alert alert-danger padding-top-4" role="alert">
 									{{ message }}
+								</div>
+								{% endif %}
 								</form>
 							</div>
 

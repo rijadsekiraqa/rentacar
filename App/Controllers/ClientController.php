@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Helper\Session;
 use App\Models\Booking;
 use App\Models\Client;
+use App\Models\User;
 use App\Models\Vehicle;
 use \Core\View;
 use \Core\Controller;
@@ -14,7 +15,64 @@ class ClientController extends Controller
 {
 
 
-    public function index()
+
+    public function index(){
+
+        $session = Session::getInstance();
+        if (!$session->isSignedIn()) {
+            header('Location: /login-form');
+            exit;
+        }
+        $clients = Client::orderBy('id','desc')->get();
+        View::renderTemplate('Clients/index.html', ['clients' => $clients]);
+    }
+
+    public function create()
+    {
+
+        View::renderTemplate('Clients/create.html');
+    }
+
+    public function store()
+    {
+        $session = Session::getInstance();
+        if (!$session->isSignedIn()) {
+            header('Location: /login-form');
+            exit;
+        }
+
+        $client = new Client();
+        $client->name = $_POST['name'];
+        $client->email = $_POST['email'];
+        $client->password = $_POST['password'];
+        $client->phone = $_POST['phone'];
+        $client->save();
+
+    }
+
+    public function edit()
+    {
+        $session = Session::getInstance();
+        if (!$session->isSignedIn()) {
+            header('Location: /user-login'); // Redirect clients to the user login page
+            exit;
+        }
+
+        $id = $_GET['id'];
+        $client = Client::findOrFail($id);
+        View::renderTemplate('Clients/edit.html', ['client'=>$client]);
+    }
+
+    public function delete()
+    {
+        $id = $_GET['id'];
+        $client = Client::find($id);
+        $client->delete();
+        header("Location: /clients");
+    }
+
+
+    public function clientprofile()
     {
         $session = Session::getInstance();
         if (!$session->isSignedIn()) {
@@ -26,26 +84,8 @@ class ClientController extends Controller
         View::renderTemplate('Clients/profileclient.html', ['client' => $loggedInClient]);
     }
 
-    public function create()
-    {
 
-        View::renderTemplate('Users/create.html');
-    }
-
-    public function store()
-    {
-
-        $client = new Client();
-        $client->name = $_POST['name'];
-        $client->surname = $_POST['surname'];
-        $client->email = $_POST['email'];
-        $client->password = $_POST['password'];
-        $client->save();
-        header("Location: /profileclient");
-    }
-
-
-    public function edit()
+    public function editprofile()
     {
         $session = Session::getInstance();
         if (!$session->isSignedIn()) {
@@ -57,7 +97,7 @@ class ClientController extends Controller
         $client = Client::findOrFail($id);
         View::renderTemplate('Clients/profileclient.html', ['client'=>$client]);
     }
-    public function update()
+    public function updateprofile()
     {
         $session = Session::getInstance();
         if (!$session->isSignedIn()) {
@@ -67,22 +107,14 @@ class ClientController extends Controller
         $id = $_POST['id'];
         $client = Client::findOrFail($id);
         $client->name = $_POST['name'];
-        $client->surname = $_POST['surname'];
         $client->email = $_POST['email'];
         $client->phone = $_POST['phone'];
         $client->address = $_POST['address'];
-        $client->password = $_POST['password'];
         $client->save();
         header("Location: /profileclient");
     }
 
-    public function delete()
-    {
-        $id = $_POST['id'];
-        $client = Client::find($id);
-        $client->delete();
-        header("Location: /users");
-    }
+
 
     public function loginForm()
     {
@@ -100,15 +132,19 @@ class ClientController extends Controller
         $password = $_POST['password'];
         $client = Client::where('email', $email)->where('password', $password)->latest()->first();
         $session = Session::getInstance();
+
         if ($client) {
             $session->login($client);
-            header('Location: /profileclient');
+            // Redirect to the referring URL
+            $referer = $_SERVER['HTTP_REFERER'] ?? '/';
+            header("Location: $referer");
             exit;
         } else {
-            $session->message("Your email or password is incorrent");
+            $session->message("Your email or password is incorrect");
             $this->loginForm();
         }
     }
+
 
     public function logout ()
     {
@@ -169,8 +205,15 @@ class ClientController extends Controller
             header('Location: /user-login');
             exit;
         }
-        $loggedIn = $session->isSignedIn();
-        $bookings = Booking::orderBy('id', 'desc')->with('vehicle')->get();
+
+        // Get the currently logged-in client
+        $loggedInClient = $session->user;
+
+        // Fetch the client's bookings using the relationship
+        $bookings = $loggedInClient->bookings()
+            ->orderBy('id', 'desc')
+            ->with('vehicle')
+            ->get();
 
         foreach ($bookings as $booking) {
             $vehicle = $booking->vehicle;
@@ -181,7 +224,7 @@ class ClientController extends Controller
 
         View::renderTemplate('Clients/mybookings.html', [
             'bookings' => $bookings,
-            'loggedIn' => $loggedIn
+            'client' => $loggedInClient
         ]);
     }
 
@@ -195,11 +238,13 @@ class ClientController extends Controller
 
     public function register()
     {
+
         $client = new Client();
         $client->name = $_POST['name'];
         $client->email = $_POST['email'];
         $client->password = $_POST['password'];
         $client->phone = $_POST['phone'];
+        $client->address = $_POST['address'];
         $client->save();
         header("Location: /index.php");
 

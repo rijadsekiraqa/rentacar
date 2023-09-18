@@ -14,37 +14,33 @@ class LandingpageController extends Controller
 {
 
 
-//    public function index()
-//    {
-//
-//        $posts = Post::orderBy('id','desc')-get();
-//        View::renderTemplate('LandingPage/index.html',['posts' => $posts]);
-//
-//    }
-
-
-
-
-
 
     public function listVehicles()
     {
         $session = Session::getInstance();
-        $loggedIn = $session->isSignedIn();
-        $client = new Client();
+        $loggedInClient = null; // Initialize the client as null by default
 
+        // Check if the user is signed in, and if so, get the client object
+        if ($session->isSignedIn()) {
+            $loggedInClient = $session->user; // Assuming the logged-in client is stored in the 'user' session variable
+        }
 
-        $vehicles = Vehicle::orderBy('id','desc')
+        $vehicles = Vehicle::orderBy('id', 'desc')
             ->with('brand')
             ->get();
+
         foreach ($vehicles as $vehicle) {
             $vehicle->photo1 = json_decode($vehicle->photo1);
         }
-        View::renderTemplate('LandingPage/index.html',
-            ['vehicles' => $vehicles,
-                'loggedIn' => $loggedIn,
-                'client'=>$client]);
+
+        View::renderTemplate('LandingPage/index.html', [
+            'vehicles' => $vehicles,
+            'client' => $loggedInClient,
+        ]);
     }
+
+
+
 
     public function edit()
     {
@@ -52,15 +48,19 @@ class LandingpageController extends Controller
         $id = $_GET['id'];
         $vehicle = Vehicle::find($id);
         $vehicle->photo1 = json_decode($vehicle->photo1);
-        // Check if the client is logged in
         $session = Session::getInstance();
-        $loggedIn = $session->isSignedIn();
+        $loggedInClient = null; // Initialize the client as null by default
+
+        // Check if the user is signed in, and if so, get the client object
+        if ($session->isSignedIn()) {
+            $loggedInClient = $session->user; // Assuming the logged-in client is stored in the 'user' session variable
+        }
 
 
 
         View::renderTemplate('LandingPage/vehiclesdetail.html', [
             'vehicle' => $vehicle,
-            'loggedIn' => $loggedIn, // Pass the loggedIn status to the template
+            'client' => $loggedInClient, // Pass the loggedIn status to the template
         ]);
 
     }
@@ -74,14 +74,18 @@ class LandingpageController extends Controller
     public function store()
     {
         $vehicleId = $_GET['id'];
+        $session = Session::getInstance(); // Initialize the $session variable
+        $loggedInClient = $session->user;
         $booking = new Booking();
         $booking->name = $_POST['name'];
+        $booking->client_id = $loggedInClient->id;
         $booking->fromdate = $_POST['fromdate'];
         $booking->todate = $_POST['todate'];
         $booking->total = $_POST['price'];
         $booking->status = 'Not confirmed yet';
         $booking->vehicle_id = $vehicleId;
         $booking->save();
+        echo '<script>alert("Booking successful.");</script>';
         header('Location: /vehicles-details?id=' . $vehicleId);
     }
     public function getPrice()

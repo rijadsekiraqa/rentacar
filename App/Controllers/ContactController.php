@@ -26,8 +26,14 @@ class ContactController extends Controller
 
     public function create()
     {
-        
-        View::renderTemplate('Contacts/create.html');
+        $session = Session::getInstance();
+        $loggedInClient = null; // Initialize the client as null by default
+
+        // Check if the user is signed in, and if so, get the client object
+        if ($session->isSignedIn()) {
+            $loggedInClient = $session->user; // Assuming the logged-in client is stored in the 'user' session variable
+        }
+        View::renderTemplate('Contacts/create.html',['client' => $loggedInClient]);
     
     }
 
@@ -54,28 +60,13 @@ class ContactController extends Controller
            header('Location: /login-form');
            exit;
         }
-        $id = $_POST['id'];
+        $id = $_GET['id'];
         $contact = Contact::find($id);
         View::renderTemplate('Contacts/edit.html', ['contact' => $contact]);
     }
 
 
-    public function update()
-    {
-        $session = Session::getInstance();
-        if (!$session->isSignedIn()) {
-           header('Location: /login-form');
-           exit;
-        }
-        $id = $_POST['id'];
-        $contact = Contact::find($id);
-        $contact->name = $_POST['name'];
-        $contact->email = $_POST['email'];
-        $contact->phone = $_POST['phone'];
-        $contact->message = $_POST['message'];
-        $contact->save();
-        header("Location: /contacts");
-    }
+
 
     public function delete()
     {
@@ -84,7 +75,7 @@ class ContactController extends Controller
            header('Location: /login-form');
            exit;
         }
-        $id = $_POST['id'];
+        $id = $_GET['id'];
         $contact = Contact::find($id);
         $contact->delete();
         header("Location: /contacts");

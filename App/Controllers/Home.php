@@ -2,9 +2,11 @@
 
 namespace App\Controllers;
 use App\Helper\Session;
+use App\Models\Client;
 use App\Models\User;
 use App\Models\Vehicle;
 use App\Models\Brand;
+use App\Models\Booking;
 use App\Models\Contact;
 use \Core\View;
 use \Core\Controller;
@@ -23,23 +25,23 @@ class Home extends Controller
     }
     
 
-    
     public function showCount()
     {
-        $usercount = User::count();
-        $brandCount = Brand::count();
-        $vehicleCount = Vehicle::count();
-        $contactCount = Contact::count();
-        View::renderTemplate('Dashboard/index.html', ['userCount' => $usercount,'brandCount' => $brandCount,'vehicleCount' => $vehicleCount,'contactCount'=>$contactCount]);
+        $user = User::count();
+        $client = Client::count();
+        $brand = Brand::count();
+        $vehicle = Vehicle::count();
+        $booking = Booking::count();
+        $contact = Contact::count();
+        View::renderTemplate('Dashboard/index.html', [
+            'userCount' => $user,
+            'clientCount' => $client,
+            'brandCount' => $brand,
+            'vehicleCount' => $vehicle,
+            'bookingCount' => $booking,
+            'contactCount'=>$contact
+        ]);
     }
-
-//    public function profileClient()
-//    {
-//
-//        View::renderTemplate('Clients/profileclient.html');
-//    }
-
-
 
 
 

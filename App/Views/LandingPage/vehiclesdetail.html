@@ -235,10 +235,10 @@
                   <!-- Dynamic input fields will be added here -->
               </div>
               <div class="form-group">
-                  {% if loggedIn %}
+                  {% if client %}
                   <input type="submit" class="btn btn-danger" name="submit" value="Book Now">
                   {% else %}
-                  <a href="/user-login" class="btn btn-danger btn-xs uppercase" data-toggle="modal" data-dismiss="modal">Login For Book</a>
+                  <a href="#loginform" class="btn btn-danger btn-xs uppercase" data-toggle="modal" data-dismiss="modal">Login For Book</a>
                   {% endif %}
               </div>
           </form>
@@ -260,13 +260,9 @@
 
 
 
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/bootstrap.min.js"></script> 
-<script src="assets/js/interface.js"></script> 
+
 <script src="assets/js/dynamicallyfield.js"></script>
-<script src="assets/js/bootstrap-slider.min.js"></script> 
-<script src="assets/js/slick.min.js"></script> 
-<script src="assets/js/owl.carousel.min.js"></script>
+
 
 
 </body>

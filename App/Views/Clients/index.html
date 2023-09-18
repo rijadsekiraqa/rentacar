@@ -1,6 +1,6 @@
 {% extends "layout/headeradmin.html" %}
 
-{% block title %}Slider | View{% endblock %}
+{% block title %}Client  |  View{% endblock %}
 
 {% block content %}
 {% include 'layout/sidenav.html' %}
@@ -10,35 +10,33 @@
         <div class="row">
             <div class="col-md-12">
 
-                <h2 class="page-title">Manage Sliders</h2>
+                <h2 class="page-title">Menagjo Klientet</h2>
 
                 <!-- Zero Configuration Table -->
                 <div class="panel panel-default">
-                    <div class="panel-heading">Veturat e Regjistruara</div>
+                    <div class="panel-heading">Perdoruesit e Regjistruar</div>
                     <div class="panel-body">
 
                         <table id="zctb" class="display table table-striped table-bordered table-hover">
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Foto</th>
-                                <th>Title </th>
-                                <th>Paragraph</th>
-                                <th>Vepro</th>
+                                <th>Emri</th>
+                                <th>Email</th>
+                                <th>Telefoni</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
 
                             <tbody>
-                            {% for post in posts %}
-
+                            {% for client in clients %}
                             <tr>
-                                <td>{{ post.id }}</td>
-                                <td>{{ post.image }}</td>
-                                <td>{{ post.title }}</td>
-                                <td>{{ post.paragraph }}</td>
-
-                                <td><a href="/sliders-edit?id={{ post.id }}"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
-                                    <a href="/sliders-delete?id={{ post.id }}" onclick="return confirm('Do you want to delete');"><i class="fa fa-close"></i></a></td>
+                                <td>{{ client.id }}</td>
+                                <td>{{ client.name }}</td>
+                                <td>{{ client.email }}</td>
+                                <td>{{ client.phone }}</td>
+                                <td><a href="/clients-edit?id={{ client.id }}"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
+                                <a href="/clients-delete?id={{ client.id }}" onclick="return confirm('Do you want to delete');"><i class="fa fa-close"></i></a></td>
                                 </td>
                             </tr>
                             {% endfor %}
@@ -52,12 +50,11 @@
 
 
 
+
             </div>
         </div>
 
     </div>
 </div>
-
-
 {% include 'layout/footeradmin.html' %}
 {% endblock %}

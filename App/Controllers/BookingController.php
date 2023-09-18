@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Helper\Session;
 use App\Models\Vehicle;
 use App\Models\Booking;
+use App\Models\Client;
 use \Core\View;
 use \Core\Controller;
 

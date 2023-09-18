@@ -1,6 +1,6 @@
-{% extends "layout/appLayout.html" %}
+{% extends "layout/headeradmin.html" %}
 
-{% block title %}User | Edit{% endblock %}
+{% block title %}Admin | Edit{% endblock %}
 
 {% block content %}
 {% include 'layout/sidenav.html' %}
@@ -14,7 +14,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">Form fields</div>
                             <div class="panel-body">
-                                <form method="post" action="/users-update" class="form-horizontal">
+                                <form method="post" action="/admins-update" class="form-horizontal">
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label" for="name">Emri</label>
                                         <div class="col-sm-8">
@@ -68,4 +68,5 @@
 </div>
 
 
+{% include 'layout/footeradmin.html' %}
 {% endblock %}

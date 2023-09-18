@@ -1,4 +1,4 @@
-{% extends "layout/appLayout.html" %}
+{% extends "layout/headeradmin.html" %}
 
 {% block title %}Contact | Edit{% endblock %}
 
@@ -14,7 +14,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">Form fields</div>
                             <div class="panel-body">
-                                <form method="post" action="/contacts-update" class="form-horizontal">
+                                <form method="post" action="/contacts" class="form-horizontal">
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Emri</label>
                                         <div class="col-sm-8">
@@ -67,5 +67,5 @@
     </div>
 </div>
 </div>
-
+{% include 'layout/footeradmin.html' %}
 {% endblock %}

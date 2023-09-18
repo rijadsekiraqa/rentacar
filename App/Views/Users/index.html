@@ -1,6 +1,6 @@
-{% extends "layout/appLayout.html" %}
+{% extends "layout/headeradmin.html" %}
 
-{% block title %}User  |  View{% endblock %}
+{% block title %}Admin | View{% endblock %}
 
 {% block content %}
 {% include 'layout/sidenav.html' %}
@@ -24,8 +24,7 @@
                                     <th>Mbiemri</th>
                                     <th>Email</th>
                                     <th>Passwordi</th>
-                                    <th>Perditeso</th>
-                                    <th>Fshije</th>
+                                    <th>Vepro</th>
                                 </tr>
                             </thead>
                             
@@ -36,15 +35,8 @@
                                     <td>{{ user.surname }}</td>
                                     <td>{{ user.email }}</td>
                                     <td>{{ user.password }}</td>
-                                    <td> <form method='post' action='/users-edit'>
-                                        <input type='hidden' name='id' value='{{user.id}}'>
-                                        <input type='submit' value='Perditeso'>
-                                    </form></td>
-                                    <td>
-                                        <form method='post' action='/users-delete'>
-                                        <input type='hidden' name='id' value='{{user.id}}'>
-                                        <input type='submit' value='Fshije'>
-                                      </form>
+                                    <td><a href="/admins-edit?id={{ user.id }}"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
+                                        <a href="/admins-delete?id={{ user.id }}" onclick="return confirm('Do you want to delete');"><i class="fa fa-close"></i></a></td>
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -64,4 +56,5 @@
 
     </div>
 </div>
+{% include 'layout/footeradmin.html' %}
 {% endblock %}

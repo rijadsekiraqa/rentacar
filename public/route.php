@@ -15,14 +15,18 @@ $router->add('get-price', ['controller' => 'LandingpageController', 'action' => 
 
 
 
+
+$router->add('clients', ['controller' => 'ClientController', 'action' => 'index']);
+$router->add('clients-create', ['controller' => 'ClientController', 'action' => 'create']);
+$router->add('clients-store', ['controller' => 'ClientController', 'action' => 'store']);
+$router->add('clients-edit', ['controller' => 'ClientController', 'action' => 'edit']);
+$router->add('clients-delete', ['controller' => 'ClientController', 'action' => 'delete']);
 $router->add('user-login', ['controller' => 'ClientController', 'action' => 'loginForm']);
 $router->add('login-user', ['controller' => 'ClientController', 'action' => 'login']);
 $router->add('logouts', ['controller' => 'ClientController', 'action' => 'logout']);
-$router->add('profileclient', ['controller' => 'ClientController', 'action' => 'index']);
-$router->add('users-store', ['controller' => 'ClientController', 'action' => 'store']);
-$router->add('clients-edit', ['controller' => 'ClientController', 'action' => 'edit']);
-$router->add('clients-update', ['controller' => 'ClientController', 'action' => 'update']);
-$router->add('users-delete', ['controller' => 'ClientController', 'action' => 'delete']);
+$router->add('profileclient', ['controller' => 'ClientController', 'action' => 'clientprofile']);
+$router->add('clientsprofile-edit', ['controller' => 'ClientController', 'action' => 'editprofile']);
+$router->add('clientsprofile-update', ['controller' => 'ClientController', 'action' => 'updateprofile']);
 $router->add('change-password', ['controller' => 'ClientController', 'action' => 'changePassword']);
 
 $router->add('signup-form',['controller' => 'ClientController','action' => 'signupform' ]);
@@ -40,7 +44,6 @@ $router->add('contacts', ['controller' => 'ContactController', 'action' => 'inde
 $router->add('contact-us', ['controller' => 'ContactController', 'action' => 'create']);
 $router->add('contacts-store', ['controller' => 'ContactController', 'action' => 'store']);
 $router->add('contacts-edit', ['controller' => 'ContactController', 'action' => 'edit']);
-$router->add('contacts-update', ['controller' => 'ContactController', 'action' => 'update']);
 $router->add('contacts-delete', ['controller' => 'ContactController', 'action' => 'delete']);
 
 
@@ -48,9 +51,6 @@ $router->add('bookings', ['controller' => 'BookingController', 'action' => 'inde
 $router->add('bookings-confirm', ['controller' => 'BookingController', 'action' => 'confirmBooking']);
 $router->add('bookings-cancel', ['controller' => 'BookingController', 'action' => 'cancelBooking']);
 
-$router->add('bookings-edit', ['controller' => 'BookingController', 'action' => 'edit']);
-$router->add('bookings-update', ['controller' => 'BookingController', 'action' => 'update']);
-$router->add('bookings-delete', ['controller' => 'BookingController', 'action' => 'delete']);
 
 
 $router->add('brands', ['controller' => 'BrandController', 'action' => 'index']);
@@ -74,17 +74,17 @@ $router->add('sliders-create', ['controller' => 'SliderController', 'action' => 
 $router->add('sliders-store', ['controller' => 'SliderController', 'action' => 'store']);
 $router->add('sliders-edit', ['controller' => 'SliderController', 'action' => 'edit']);
 $router->add('sliders-update', ['controller' => 'SliderController', 'action' => 'update']);
-
+$router->add('sliders-delete', ['controller' => 'SliderController', 'action' => 'delete']);
 
 $router->add('login-form', ['controller' => 'UserController', 'action' => 'loginForm']);
 $router->add('login', ['controller' => 'UserController', 'action' => 'login']);
 $router->add('logout', ['controller' => 'UserController', 'action' => 'logout']);
-$router->add('users', ['controller' => 'UserController', 'action' => 'index']);
-$router->add('users-create', ['controller' => 'UserController', 'action' => 'create']);
-$router->add('users-store', ['controller' => 'UserController', 'action' => 'store']);
-$router->add('users-edit', ['controller' => 'UserController', 'action' => 'edit']);
-$router->add('users-update', ['controller' => 'UserController', 'action' => 'update']);
-$router->add('users-delete', ['controller' => 'UserController', 'action' => 'delete']);
+$router->add('admins', ['controller' => 'UserController', 'action' => 'index']);
+$router->add('admins-create', ['controller' => 'UserController', 'action' => 'create']);
+$router->add('admins-store', ['controller' => 'UserController', 'action' => 'store']);
+$router->add('admins-edit', ['controller' => 'UserController', 'action' => 'edit']);
+$router->add('admins-update', ['controller' => 'UserController', 'action' => 'update']);
+$router->add('admins-delete', ['controller' => 'UserController', 'action' => 'delete']);
 $router->add('change-password', ['controller' => 'UserController', 'action' => 'changePassword']);
 $router->add('password-update', ['controller' => 'UserController', 'action' => 'passwordUpdate']);
 

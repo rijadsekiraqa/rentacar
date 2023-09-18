@@ -43,7 +43,7 @@ class BrandController extends Controller
 
     public function edit()
     {
-        $id = $_POST['id'];
+        $id = $_GET['id'];
         $brand = Brand::find($id);
         View::renderTemplate('Brands/edit.html', ['brand' => $brand]);
     }
@@ -60,7 +60,7 @@ class BrandController extends Controller
 
     public function delete()
     {
-        $id = $_POST['id'];
+        $id = $_GET['id'];
         $brand = Brand::find($id);
         $brand->delete();
         header("Location: /brands");

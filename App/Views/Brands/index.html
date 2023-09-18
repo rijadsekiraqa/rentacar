@@ -1,4 +1,4 @@
-{% extends "layout/appLayout.html" %}
+{% extends "layout/headeradmin.html" %}
 
 {% block title %}Brand  |  View{% endblock %}
 
@@ -24,8 +24,7 @@
                                     
                                 
                                     <th>Marka</th>
-                                    <th>Perditeso</th>
-                                    <th>Fshije</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             
@@ -33,16 +32,8 @@
                                 {% for brand in brands %}
                                 <tr>
                                     <td>{{ brand.name }}</td>
-                                    <td> <form method='post' action='/brands-edit'>
-                                        <input type='hidden' name='id' value='{{brand.id}}'>
-                                        <input type='submit' value='Perditeso'>
-                                    </form></td>
-                                    <td>
-                                        <form method='post' action='/brands-delete'>
-                                        <input type='hidden' name='id' value='{{brand.id}}'>
-                                        <input type='submit' value='Fshije'>
-                                      </form>
-                                    </td>
+                                    <td><a href="/brands-edit?id={{ brand.id }}"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
+                                        <a href="/brands-delete?id={{ brand.id }}" onclick="return confirm('Do you want to delete');"><i class="fa fa-close"></i></a></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -62,4 +53,5 @@
     </div>
 </div>
 </div>
+{% include 'layout/footeradmin.html' %}
 {% endblock %}
