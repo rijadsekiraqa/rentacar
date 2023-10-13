@@ -5,7 +5,7 @@
 {% block content %}
 
 <section id="listing_img_slider">
-    {% for photo in vehicle.photo1 %} 
+    {% for photo in vehicle.photo1 %}
     <div><img src="/uploads/{{ photo }}" class="img-responsive" alt="image" width="900" height="560"></div>
     {% endfor %}
   </section>
@@ -19,7 +19,7 @@
       <div class="col-md-3">
         <div class="price_info">
           <p>{{vehicle.price}}$</p>Per Day
-         
+
         </div>
       </div>
     </div>
@@ -27,7 +27,7 @@
       <div class="col-md-9">
         <div class="main_features">
           <ul>
-          
+
             <li> <i class="fa fa-calendar" aria-hidden="true"></i>
               <h5>Viti i Prodhimit</h5>
               <p> {{vehicle.year}} </p>
@@ -36,7 +36,7 @@
               <h5>Karburanti</h5>
               <p>{{vehicle.fuel}}</p>
             </li>
-       
+
             <li> <i class="fa fa-user-plus" aria-hidden="true"></i>
               <h5>Kubikazha</h5>
               <p>{{vehicle.cubical}}</p>
@@ -56,30 +56,30 @@
                 <p>{{vehicle.mileage}}</p>
             </li>
 
-              
+
           </ul>
         </div>
-       
+
         <div class="listing_more_info">
-          <div class="listing_detail_wrap"> 
+          <div class="listing_detail_wrap">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs gray-bg" role="tablist">
               <li role="presentation" class="active"><a href="#vehicle-overview " aria-controls="vehicle-overview" role="tab" data-toggle="tab">Vehicle Overview </a></li>
-          
+
               <li role="presentation"><a href="#accessories" aria-controls="accessories" role="tab" data-toggle="tab">Accessories</a></li>
             </ul>
-            
+
             <!-- Tab panes -->
-            <div class="tab-content"> 
+            <div class="tab-content">
               <!-- vehicle-overview -->
               <div role="tabpanel" class="tab-pane active" id="vehicle-overview">
-                
+
                 <p>{{ vehicle.overview }}</p>
               </div>
-              
-              
+
+
               <!-- Accessories -->
-              <div role="tabpanel" class="tab-pane" id="accessories"> 
+              <div role="tabpanel" class="tab-pane" id="accessories">
                 <!--Accessories-->
                 <table>
                   <thead>
@@ -90,7 +90,7 @@
                   <tbody>
                     <tr>
                         <td>AC</td>
-                        
+
                         {% if vehicle.airconditioner == 1 %}
                           <td><i class="fa fa-check" aria-hidden="true"></i></td>
                         {% else %}
@@ -115,7 +115,7 @@
 <td><i class="fa fa-close" aria-hidden="true"></i></td>
 {% endif %}
 </tr>
-                   
+
 
 <tr>
 
@@ -127,7 +127,7 @@
 <td><i class="fa fa-close" aria-hidden="true"></i></td>
 {% endif %}
 </tr>
-                   
+
  <tr>
 <td>Navigacion</td>
 {% if vehicle.cdplayer == 1 %}
@@ -180,7 +180,7 @@
 <td><i class="fa fa-close" aria-hidden="true"></i></td>
 {% endif %}
  </tr>
- 
+
  <tr>
  <td>Passenger Airbag</td>
  {% if vehicle.passengerairbag == 1 %}
@@ -204,22 +204,22 @@
               </div>
             </div>
           </div>
-          
+
         </div>
 
-   
+
       </div>
-      
+
       <!--Side-Bar-->
       <aside class="col-md-3">
-      
-       
+
+
         <div class="sidebar_widget">
           <div class="widget_heading">
             <h5><i class="fa fa-envelope" aria-hidden="true"></i>Rezervo Tani</h5>
           </div>
-            <form method="post" id="bookingForm" action="/bookings-store?id={{ vehicle.id }}">
-              
+            <form method="post" id="booking-form" action="/bookings-store?id={{ vehicle.id }}">
+
             <div class="form-group">
               <input type="text" class="form-control" name="name" placeholder="Emri dhe Mbiemri" required>
             </div>
@@ -241,28 +241,56 @@
                   <a href="#loginform" class="btn btn-danger btn-xs uppercase" data-toggle="modal" data-dismiss="modal">Login For Book</a>
                   {% endif %}
               </div>
+
           </form>
         </div>
       </aside>
-      <!--/Side-Bar--> 
+      <!--/Side-Bar-->
     </div>
-    
-   
 
-    
+
+
+
   </div>
 </section>
 
 
 <!--Back to top-->
 <div id="back-top" class="back-top"> <a href="#top"><i class="fa fa-angle-up" aria-hidden="true"></i> </a> </div>
-<!--/Back to top--> 
+<!--/Back to top-->
 
 
 
 
 <script src="assets/js/dynamicallyfield.js"></script>
+<script>
+    $(document).ready(function() {
 
+        $('#booking-form').submit(function(e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            $.ajax({
+                type: 'POST',
+                url: '/bookings-store?id={{ vehicle.id }}',
+                data: $(this).serialize(), // Serialize the form data
+                success: function(data) {
+                    // Display a alert when submit form
+                    alert("Booking successful");
+                    $('#booking-form input[name="name"]').val('');
+                    $('#booking-form input[name="fromdate"]').val('');
+                    $('#booking-form input[name="todate"]').val('');
+
+                    // Hide the "price" field
+                    $('.dynamicInputContainer').hide();
+
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        });
+    });
+</script>
 
 
 </body>
