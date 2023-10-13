@@ -12,13 +12,25 @@ namespace App\Controllers;
     class SliderController extends Controller
     {
 
+    public function __construct()
+    {
+        $this->session = Session::getInstance();
+        if (!$this->session->isSignedIn()) {
+            header('Location: /login-form');
+            exit;
+        }
+
+
+    }
 
     public function index()
     {
 
         $posts = Post::orderBy('id')->get();
-
-        View::renderTemplate('Sliders/index.html', ['posts' => $posts]);
+        $loggedInUser = $this->session->user;
+        View::renderTemplate('Sliders/index.html', [
+            'posts' => $posts,
+            'username' => $loggedInUser]);
 
     }
 
@@ -26,7 +38,10 @@ namespace App\Controllers;
 
     public function create()
     {
-      View::renderTemplate('Sliders/create.html');
+        $loggedInUser = $this->session->user;
+        View::renderTemplate('Sliders/create.html',[
+          'username' => $loggedInUser
+      ]);
     }
 
     public function store()
@@ -50,12 +65,13 @@ namespace App\Controllers;
 
     public function edit()
     {
-
+        $loggedInUser = $this->session->user;
         $id = $_GET['id'];
         $post = Post::find($id);
         $post->image = json_decode($post->image);
         View::renderTemplate('Sliders/edit.html',[
-            'post' => $post]);
+            'post' => $post,
+            'username' => $loggedInUser]);
 
     }
 

@@ -21,18 +21,42 @@ class UserController extends Controller
             header('Location: /login-form');
             exit;
         }
+
+        if (!$session->user || $session->client) {
+            // Redirect to an unauthorized page or handle this case accordingly
+            header('Location: /login-form'); // Redirect to an unauthorized page
+            exit;
+        }
+        $loggedInUser = $session->user;
         $users = User::orderBy('id','desc')->get();
-        View::renderTemplate('Users/index.html', ['users' => $users]);
+        $message = '';
+        if(!empty($session->message)){
+            $message = $session->message;
+        }
+        View::renderTemplate('Users/index.html', [
+            'users' => $users,
+            'username' => $loggedInUser,
+            'message' => $message
+        ]);
     }
 
     public function create()
     {
+
         $session = Session::getInstance();
         if (!$session->isSignedIn()) {
             header('Location: /login-form');
             exit;
         }
-        View::renderTemplate('Users/create.html');
+        if (!$session->user || $session->client) {
+            // Redirect to an unauthorized page or handle this case accordingly
+            header('Location: /login-form'); // Redirect to an unauthorized page
+            exit;
+        }
+        $loggedInUser = $session->user;
+        View::renderTemplate('Users/create.html',[
+            'username' => $loggedInUser
+        ]);
     }
 
     public function store()
@@ -42,50 +66,102 @@ class UserController extends Controller
             header('Location: /login-form');
             exit;
         }
+        if (!$session->user || $session->client) {
+            // Redirect to an unauthorized page or handle this case accordingly
+            header('Location: /login-form'); // Redirect to an unauthorized page
+            exit;
+        }
         $user = new User();
         $user->name = $_POST['name'];
         $user->surname = $_POST['surname'];
         $user->email = $_POST['email'];
-        $user->password = $_POST['password'];
-        $user->save();
+        $passwordHash = password_hash($_POST['password'], PASSWORD_BCRYPT);
+        $user->password = $passwordHash;
+
+
+        if ($user->save())
+        {
+            $session->message('User created successfully.');
+        }
         header("Location: /admins");
+            exit();
+
     }
 
     public function edit()
     {
         $session = Session::getInstance();
-        if (!$session->isSignedIn()) {
+        if (!$session->isSignedIn())
+        {
             header('Location: /login-form');
             exit;
         }
+        if (!$session->user || $session->client) {
+            // Redirect to an unauthorized page or handle this case accordingly
+            header('Location: /login-form'); // Redirect to an unauthorized page
+            exit;
+        }
+        $loggedInUser = $session->user;
         $id = $_GET['id'];
         $user = User::findOrFail($id);
-        View::renderTemplate('Users/edit.html', ['user'=>$user]);
+        View::renderTemplate('Users/edit.html', [
+            'user' => $user,
+            'username'=>$loggedInUser
+        ]);
     }
 
     public function update()
     {
+        $session = Session::getInstance();
+        if (!$session->isSignedIn())
+        {
+            header('Location: /login-form');
+            exit;
+        }
+        if (!$session->user || $session->client) {
+            // Redirect to an unauthorized page or handle this case accordingly
+            header('Location: /login-form'); // Redirect to an unauthorized page
+            exit;
+        }
         $id = $_POST['id'];
         $user = User::findOrFail($id);
         $user->name = $_POST['name'];
         $user->surname = $_POST['surname'];
         $user->email = $_POST['email'];
-        $user->password = $_POST['password'];
-        $user->save();
+        // Hash the password using bcrypt
+        $passwordHash = password_hash($_POST['password'], PASSWORD_BCRYPT);
+        $user->password = $passwordHash;
+        if($user->save()){
+        $session->message('User updated successfully.');
+        }
         header("Location: /admins");
     }
   
     public function delete()
     {
+        $session = Session::getInstance();
+        if (!$session->isSignedIn())
+        {
+            header('Location: /login-form');
+            exit;
+        }
+        if (!$session->user || $session->client) {
+            // Redirect to an unauthorized page or handle this case accordingly
+            header('Location: /login-form'); // Redirect to an unauthorized page
+            exit;
+        }
         $id = $_GET['id'];
         $user = User::find($id);
-        $user->delete();
+        if($user->delete()){
+            $session->message('User deleted successfully.');
+        }
         header("Location: /admins");
     }
 
     public function loginForm()
     {
         $session = Session::getInstance();
+
         $message = '';
         if(!empty($session->message)){
             $message = $session->message;
@@ -99,8 +175,9 @@ class UserController extends Controller
         $password = $_POST['password'];
         $user = User::where('email', $email)->where('password', $password)->latest()->first();
         $session = Session::getInstance();
-        if ($user) {
-            $session->login($user); 
+        if ($user)
+        {
+            $session->loginUser($user);
             header('Location: /dashboard');
             exit;
         } else {
@@ -116,16 +193,51 @@ class UserController extends Controller
         header("Location: /login-form");
     }
 
-
-
     public function changePassword()
     {
         $session = Session::getInstance();
-        if (!$session->isSignedIn()) {
+        if (!$session->isSignedIn())
+        {
             header('Location: /login-form');
             exit;
         }
-        View::renderTemplate('Users/change-password.html');
+        if (!$session->user || $session->client) {
+            // Redirect to an unauthorized page or handle this case accordingly
+            header('Location: /login-form'); // Redirect to an unauthorized page
+            exit;
+        }
+
+        $loggedInUser = $session->user;
+        $user = $loggedInUser;
+
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $currentPassword = $_POST['password'];
+            $newPassword = $_POST['newpassword'];
+
+            // Check if new password is the same as the current password
+            if ($newPassword === $currentPassword) {
+                $errors[] = "New password cannot be the same as the current password.";
+            } else {
+                $confirmPassword = $_POST['confirmpassword'];
+
+                if ($newPassword !== $confirmPassword) {
+                    $errors[] = "New password and confirm password do not match.";
+                } else {
+                    // Update the user's password
+                    $loggedInUser->password = $newPassword;
+                    $loggedInUser->save();
+                    $messages[] = "Password updated successfully!";
+                }
+            }
+        }
+        View::renderTemplate('Users/change-password.html',[
+            'username' => $loggedInUser,
+            'user' => $user
+        ]);
+
+
+
     }
 
     public function passwordUpdate()
@@ -133,6 +245,11 @@ class UserController extends Controller
         $session = Session::getInstance();
         if (!$session->isSignedIn()) {
             header('Location: /login-form');
+            exit;
+        }
+        if (!$session->user || $session->client) {
+            // Redirect to an unauthorized page or handle this case accordingly
+            header('Location: /login-form'); // Redirect to an unauthorized page
             exit;
         }
         $id = $_POST['id'];

@@ -33,13 +33,20 @@ class Home extends Controller
         $vehicle = Vehicle::count();
         $booking = Booking::count();
         $contact = Contact::count();
+        $session = Session::getInstance();
+        if (!$session->isSignedIn()) {
+            header('Location: /login-form');
+            exit;
+        }
+        $loggedInUser = $session->user;
         View::renderTemplate('Dashboard/index.html', [
             'userCount' => $user,
             'clientCount' => $client,
             'brandCount' => $brand,
             'vehicleCount' => $vehicle,
             'bookingCount' => $booking,
-            'contactCount'=>$contact
+            'contactCount'=>$contact,
+            'username' => $loggedInUser
         ]);
     }
 

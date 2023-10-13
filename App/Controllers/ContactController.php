@@ -20,8 +20,16 @@ class ContactController extends Controller
             header('Location: /login-form');
             exit;
          }
+        if (!$session->user || $session->client) {
+            // Redirect to an unauthorized page or handle this case accordingly
+            header('Location: /login-form'); // Redirect to an unauthorized page
+            exit;
+        }
+         $loggedInUser = $session->user;
          $contacts = Contact::orderBy('id','desc')->get();
-         View::renderTemplate('Contacts/index.html',['contacts' => $contacts]);
+         View::renderTemplate('Contacts/index.html',[
+             'contacts' => $contacts,
+             'username' => $loggedInUser]);
     }
 
     public function create()
@@ -31,7 +39,7 @@ class ContactController extends Controller
 
         // Check if the user is signed in, and if so, get the client object
         if ($session->isSignedIn()) {
-            $loggedInClient = $session->user; // Assuming the logged-in client is stored in the 'user' session variable
+            $loggedInClient = $session->client; // Assuming the logged-in client is stored in the 'user' session variable
         }
         View::renderTemplate('Contacts/create.html',['client' => $loggedInClient]);
     
@@ -60,9 +68,18 @@ class ContactController extends Controller
            header('Location: /login-form');
            exit;
         }
+        if (!$session->user || $session->client) {
+            // Redirect to an unauthorized page or handle this case accordingly
+            header('Location: /login-form'); // Redirect to an unauthorized page
+            exit;
+        }
+        $loggedInUser = $session->user;
         $id = $_GET['id'];
         $contact = Contact::find($id);
-        View::renderTemplate('Contacts/edit.html', ['contact' => $contact]);
+        View::renderTemplate('Contacts/edit.html', [
+            'contact' => $contact,
+            'username' => $loggedInUser
+        ]);
     }
 
 
@@ -74,6 +91,10 @@ class ContactController extends Controller
         if (!$session->isSignedIn()) {
            header('Location: /login-form');
            exit;
+        }
+        if (!$session->user || $session->client) {
+            header('Location: /login-form');
+            exit;
         }
         $id = $_GET['id'];
         $contact = Contact::find($id);

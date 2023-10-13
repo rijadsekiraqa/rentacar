@@ -19,8 +19,21 @@ class VehicleController extends Controller
             header('Location: /login-form');
             exit;
         }
+        if (!$session->user || $session->client) {
+            header('Location: /login-form');
+            exit;
+        }
+        $message = '';
+        if(!empty($session->message)){
+            $message = $session->message;
+        }
+        $loggedInUser = $session->user;
         $vehicles = Vehicle::orderBy('name')->with('brand')->get();
-        View::renderTemplate('Vehicles/index.html', ['vehicles' => $vehicles]);
+        View::renderTemplate('Vehicles/index.html', [
+        'vehicles' => $vehicles,
+        'username' =>$loggedInUser,
+        'message' => $message
+        ]);
     }
 
 
@@ -31,9 +44,15 @@ class VehicleController extends Controller
             header('Location: /login-form');
             exit;
         }
+        if (!$session->user || $session->client) {
+            header('Location: /login-form');
+            exit;
+        }
+        $loggedInUser = $session->user;
         $brands = Brand::orderBy('name')->get();
         View::renderTemplate('Vehicles/create.html', [
-            'brands' => $brands
+            'brands' => $brands,
+            'username' => $loggedInUser
         ]);
     }
 
@@ -41,6 +60,10 @@ class VehicleController extends Controller
     {
         $session = Session::getInstance();
         if (!$session->isSignedIn()) {
+            header('Location: /login-form');
+            exit;
+        }
+        if (!$session->user || $session->client) {
             header('Location: /login-form');
             exit;
         }
@@ -98,8 +121,10 @@ class VehicleController extends Controller
         $vehicle->centralock = isset($_POST['centralock']) ? true : false;
         $vehicle->crashsensor = isset($_POST['crashsensor']) ? true : false;
         $vehicle->leatherseats = isset($_POST['leatherseats']) ? true : false;
-        $vehicle->save();
 
+        if($vehicle->save()){
+            $session->message('Vehicle created successfully.');
+        }
         header("Location: /vehicles");
     }
 
@@ -111,17 +136,21 @@ class VehicleController extends Controller
             header('Location: /login-form');
             exit;
         }
-
-
+        if (!$session->user || $session->client) {
+            header('Location: /login-form');
+            exit;
+        }
+        $loggedInUser = $session->user;
         $id = $_GET['id'];
         $vehicle = Vehicle::find($id);
         $vehicle->photo1 = json_decode($vehicle->photo1);
 
-        $brands = Brand::orderBy('name')->get();
 
+        $brands = Brand::orderBy('name')->get();
         View::renderTemplate('Vehicles/edit.html', [
             'vehicle' => $vehicle,
-            'brands' => $brands
+            'brands' => $brands,
+            'username' => $loggedInUser
         ]);
     }
 
@@ -129,10 +158,14 @@ class VehicleController extends Controller
     public function update()
     {
 
-
         $session = Session::getInstance();
         if (!$session->isSignedIn()) {
             header('Location: /login-form');
+            exit;
+        }
+        if (!$session->user || $session->client) {
+            // Redirect to an unauthorized page or handle this case accordingly
+            header('Location: /login-form'); // Redirect to an unauthorized page
             exit;
         }
 
@@ -179,7 +212,9 @@ class VehicleController extends Controller
         $vehicle->centralock = isset($_POST['centralock']) ? true : false;
         $vehicle->crashsensor = isset($_POST['crashsensor']) ? true : false;
         $vehicle->leatherseats = isset($_POST['leatherseats']) ? true : false;
-        $vehicle->save();
+        if($vehicle->save()){
+            $session->message('Vehicle updated successfully.');
+        }
 
 
         header("Location: /vehicles");
@@ -194,10 +229,17 @@ class VehicleController extends Controller
             header('Location: /login-form');
             exit;
         }
+        if (!$session->user || $session->client) {
+            // Redirect to an unauthorized page or handle this case accordingly
+            header('Location: /login-form'); // Redirect to an unauthorized page
+            exit;
+        }
 
-        $id = $_POST['id'];
+        $id = $_GET['id'];
         $vehicle = Vehicle::find($id);
-        $vehicle->delete();
+        if($vehicle->delete()){
+            $session->message('Vehicle deleted successfully.');
+        }
         header("Location: /vehicles");
     }
 

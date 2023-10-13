@@ -10,12 +10,12 @@
                 <div class="row">
                     <div class="login_wrap">
                         <div class="col-md-12 col-sm-6">
-                            <form method="post" id="login" action="/login-user">
+                            <form method="post" id="login-form">
                                 <div class="form-group">
-                                    <input type="email" class="form-control" name="email" placeholder="Email address*">
+                                    <input type="email" class="form-control" name="email" placeholder="Email address*" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control" name="password" placeholder="Password*">
+                                    <input type="password" class="form-control" name="password" placeholder="Password*" required>
                                 </div>
                                 <div class="form-group checkbox">
                                     <input type="checkbox" id="remember">
@@ -23,27 +23,8 @@
                                 <div class="form-group">
                                     <input type="submit" name="login" value="Login" class="btn btn-danger btn-block">
                                 </div>
-                                {{ message }}
+                                <div id="modal-errors"></div>
                             </form>
-
-                            {% if errors is defined and errors %}
-                            <div class="alert alert-danger">
-                                <ul>
-                                    {% for error in errors %}
-                                    <li>{{ error }}</li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                            {% endif %}
-                            {% if messages is defined and messages %}
-                            <div class="alert alert-success">
-                                <ul>
-                                    {% for message in messages %}
-                                    <li>{{ message }}</li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                            {% endif %}
                         </div>
 
                     </div>
@@ -70,6 +51,39 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 {% include 'Auth/signupform.html' %}
+
+<script>
+    $(document).ready(function() {
+        // Listen for the form submission event
+        $('#login-form').submit(function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Get the form data
+            var formData = $(this).serialize();
+
+            // Send an AJAX request to the server to handle the form submission
+            $.ajax({
+                type: 'POST',
+                url: '/login-user',
+                data: formData,
+                success: function(response) {
+                    if (response.success) {
+                        // Handle successful login
+                        window.location.href = '/profileclient';
+                    } else {
+                        // Display validation errors within the modal
+                        var errorsHtml = '<div class="alert alert-danger padding-top-4"><ul>';
+                        for (var i = 0; i < response.errors.length; i++) {
+                            errorsHtml += '<li>' + response.errors[i] + '</li>';
+                        }
+                        errorsHtml += '</ul></div>';
+                        $('#modal-errors').html(errorsHtml);
+                    }
+                }
+            });
+        });
+    });
+</script>
 
 
 

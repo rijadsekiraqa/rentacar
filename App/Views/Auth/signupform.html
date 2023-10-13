@@ -20,6 +20,11 @@
                                 <div class="form-group">
                                     <input type="text" placeholder="Email Address" name="email"  class="form-control mb" required>
                                 </div>
+                                {% if warningMessage is defined %}
+                                <div class="warning">
+                                    {{ warningMessage }}
+                                </div>
+                                {% endif %}
                                 <div class="form-group">
                                     <input type="password" placeholder="Password" name="password"  class="form-control mb" required>
                                     <span id="user-availability-status" style="font-size:12px;"></span>

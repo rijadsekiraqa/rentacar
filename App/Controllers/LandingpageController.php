@@ -22,7 +22,7 @@ class LandingpageController extends Controller
 
         // Check if the user is signed in, and if so, get the client object
         if ($session->isSignedIn()) {
-            $loggedInClient = $session->user; // Assuming the logged-in client is stored in the 'user' session variable
+            $loggedInClient = $session->client;  // Assuming the logged-in client is stored in the 'user' session variable
         }
 
         $vehicles = Vehicle::orderBy('id', 'desc')
@@ -53,7 +53,7 @@ class LandingpageController extends Controller
 
         // Check if the user is signed in, and if so, get the client object
         if ($session->isSignedIn()) {
-            $loggedInClient = $session->user; // Assuming the logged-in client is stored in the 'user' session variable
+            $loggedInClient = $session->client;  // Assuming the logged-in client is stored in the 'user' session variable
         }
 
 
@@ -75,7 +75,7 @@ class LandingpageController extends Controller
     {
         $vehicleId = $_GET['id'];
         $session = Session::getInstance(); // Initialize the $session variable
-        $loggedInClient = $session->user;
+        $loggedInClient = $session->client;
         $booking = new Booking();
         $booking->name = $_POST['name'];
         $booking->client_id = $loggedInClient->id;
@@ -104,7 +104,6 @@ class LandingpageController extends Controller
         echo $pricePerDay;
         exit;
     }
-
 
 
 

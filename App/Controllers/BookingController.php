@@ -15,11 +15,16 @@ class BookingController extends Controller
 
     public function __construct()
     {
-        $session = Session::getInstance();
-        if (!$session->isSignedIn()) {
+        $this->session = Session::getInstance();
+        if (!$this->session->isSignedIn()) {
             header('Location: /login-form');
             exit;
         }
+        if (!$this->session->user || $this->session->client) {
+            header('Location: /login-form');
+            exit;
+        }
+
     }
 
 
@@ -27,7 +32,11 @@ class BookingController extends Controller
     {
         $message = isset($_GET['message']) ? urldecode($_GET['message']) : '';
         $bookings = Booking::orderBy('id', 'desc')->with('vehicle')->get();
-        View::renderTemplate('Bookings/index.html', ['bookings' => $bookings, 'message' => $message]);
+        $loggedInUser = $this->session->user;
+        View::renderTemplate('Bookings/index.html', [
+            'bookings' => $bookings,
+            'username' => $loggedInUser,
+            'message' => $message]);
     }
     public function confirmBooking()
     {

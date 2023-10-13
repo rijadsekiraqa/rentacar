@@ -16,21 +16,41 @@ class ClientController extends Controller
 
 
 
-    public function index(){
-
+    public function index()
+    {
         $session = Session::getInstance();
         if (!$session->isSignedIn()) {
             header('Location: /login-form');
             exit;
         }
+
+        $loggedInUser = $session->user;
+        $message = '';
+        if(!empty($session->message)){
+            $message = $session->message;
+        }
         $clients = Client::orderBy('id','desc')->get();
-        View::renderTemplate('Clients/index.html', ['clients' => $clients]);
+
+        View::renderTemplate('Clients/index.html', [
+            'clients' => $clients,
+            'username' => $loggedInUser,
+            'message'=>$message
+        ]);
     }
+
+
 
     public function create()
     {
-
-        View::renderTemplate('Clients/create.html');
+        $session = Session::getInstance();
+        if (!$session->isSignedIn()) {
+            header('Location: /login-form');
+            exit;
+        }
+        $loggedInUser = $session->user;
+        View::renderTemplate('Clients/create.html',[
+            'username' => $loggedInUser
+        ]);
     }
 
     public function store()
@@ -40,15 +60,18 @@ class ClientController extends Controller
             header('Location: /login-form');
             exit;
         }
-
         $client = new Client();
         $client->name = $_POST['name'];
         $client->email = $_POST['email'];
         $client->password = $_POST['password'];
         $client->phone = $_POST['phone'];
-        $client->save();
-
+        if ($client->save()) {
+            $session->message('Client created successfully.');
+        }
+        header("Location: /clients");
     }
+
+
 
     public function edit()
     {
@@ -57,17 +80,29 @@ class ClientController extends Controller
             header('Location: /user-login'); // Redirect clients to the user login page
             exit;
         }
-
+        $loggedInUser = $session->user;
         $id = $_GET['id'];
         $client = Client::findOrFail($id);
-        View::renderTemplate('Clients/edit.html', ['client'=>$client]);
+        View::renderTemplate('Clients/edit.html', [
+            'client'=>$client,
+            'username' => $loggedInUser
+        ]);
     }
 
     public function delete()
     {
+        $session = Session::getInstance();
+        if (!$session->isSignedIn()) {
+            header('Location: /login-form');
+            exit;
+        }
+
         $id = $_GET['id'];
         $client = Client::find($id);
-        $client->delete();
+
+        if($client->delete()){
+            $session->message('Client deleted successfully.');
+        }
         header("Location: /clients");
     }
 
@@ -75,14 +110,25 @@ class ClientController extends Controller
     public function clientprofile()
     {
         $session = Session::getInstance();
+
+        // Check if the user is logged in
         if (!$session->isSignedIn()) {
             header('Location: /user-login'); // Redirect clients to the user login page
             exit;
         }
-        $loggedInClient = $session->user; // Assuming the logged-in client is stored in the 'user' session variable
+
+        // Check if the logged-in user is a client
+        if (!$session->client || $session->user) {
+            // User is not a client, handle this case accordingly
+            header('Location: /not-authorized'); // Redirect to an unauthorized page
+            exit;
+        }
+
+        $loggedInClient = $session->client;
 
         View::renderTemplate('Clients/profileclient.html', ['client' => $loggedInClient]);
     }
+
 
 
     public function editprofile()
@@ -132,18 +178,20 @@ class ClientController extends Controller
         $password = $_POST['password'];
         $client = Client::where('email', $email)->where('password', $password)->latest()->first();
         $session = Session::getInstance();
+        $response = [];
 
         if ($client) {
-            $session->login($client);
-            // Redirect to the referring URL
-            $referer = $_SERVER['HTTP_REFERER'] ?? '/';
-            header("Location: $referer");
-            exit;
+            $session->loginClient($client);
+            $response['success'] = true;
         } else {
-            $session->message("Your email or password is incorrect");
-            $this->loginForm();
+            $response['success'] = false;
+            $response['errors'] = ['Your email or password is incorrect'];
         }
+
+        header('Content-Type: application/json');
+        echo json_encode($response);
     }
+
 
 
     public function logout ()
@@ -164,7 +212,7 @@ class ClientController extends Controller
             exit;
         }
 
-        $loggedInClient = $session->user;
+        $loggedInClient = $session->client;
 
         $errors = [];
         $messages = [];
@@ -207,7 +255,7 @@ class ClientController extends Controller
         }
 
         // Get the currently logged-in client
-        $loggedInClient = $session->user;
+        $loggedInClient = $session->client;
 
         // Fetch the client's bookings using the relationship
         $bookings = $loggedInClient->bookings()
@@ -227,6 +275,7 @@ class ClientController extends Controller
             'client' => $loggedInClient
         ]);
     }
+
 
 
 

@@ -543,6 +543,7 @@ li {
   padding-bottom: 15px;
   margin-bottom: 20px;
   border-bottom: 1px solid #f0f0f0;
+  font-family: 'Oswald';
 }
 .brand {
   background: #3e454c;
@@ -760,3 +761,13 @@ li {
     box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
 }
 
+.add-product a {
+  float: right;
+  position: absolute;
+  top: 20px;
+  right: 35px;
+  background: #325d88;
+  padding: 6px 20px;
+  color: #fff;
+  border-radius: 4px;
+}

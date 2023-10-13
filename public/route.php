@@ -61,6 +61,7 @@ $router->add('brands-update', ['controller' => 'BrandController', 'action' => 'u
 $router->add('brands-delete', ['controller' => 'BrandController', 'action' => 'delete']);
 
 
+
 $router->add('vehicles', ['controller' => 'VehicleController', 'action' => 'index']);
 $router->add('vehicles-create', ['controller' => 'VehicleController', 'action' => 'create']);
 $router->add('vehicles-store', ['controller' => 'VehicleController', 'action' => 'store']);
@@ -87,6 +88,10 @@ $router->add('admins-update', ['controller' => 'UserController', 'action' => 'up
 $router->add('admins-delete', ['controller' => 'UserController', 'action' => 'delete']);
 $router->add('change-password', ['controller' => 'UserController', 'action' => 'changePassword']);
 $router->add('password-update', ['controller' => 'UserController', 'action' => 'passwordUpdate']);
+
+
+
+
 
 $router->dispatch($_SERVER['QUERY_STRING']);
 

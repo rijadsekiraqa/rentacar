@@ -6,12 +6,9 @@
 {% include 'layout/sidenav.html' %}
 <div class="content-wrapper">
     <div class="container-fluid">
-
         <div class="row">
             <div class="col-md-12">
-            
                 <h2 class="page-title">Regjistro Veturen</h2>
-
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-default">
@@ -30,8 +27,6 @@
                             {% for brand in brands %}
                             <option value="{{ brand.id }}">{{ brand.name }}</option>
                             {% endfor %}
-
-
                     </select>
                     </div>
                     </div>
@@ -111,8 +106,8 @@
     Foto 3<span style="color:red">*</span><input type="file" name="photo3" required>
     </div>
     </div>
-    
-    
+
+
     <div class="form-group">
     <div class="col-sm-4">
     Foto 4<span style="color:red">*</span><input type="file" name="photo4" required>
@@ -123,12 +118,6 @@
 
 </div>
 <div class="hr-dashed"></div>
-</form>
-</div>
-</div>
-</div>
-</div>
-                    
 
             <div class="row">
             <div class="col-md-12">
@@ -169,13 +158,13 @@
             </div>
             </div>
             <div class="col-sm-3">
-            <div class="checkbox checkbox-inline">   
+            <div class="checkbox checkbox-inline">
             <input type="checkbox" id="driverairbag" name="driverairbag">
             <label for="driverairbag">Driver Airbag</label>
             </div>
             </div>
             <div class="col-sm-3">
-            <div class="checkbox checkbox-inline">  
+            <div class="checkbox checkbox-inline">
             <input type="checkbox" id="passengerairbag" name="passengerairbag">
             <label for="passengerairbag"> Passenger Airbag </label>
             </div></div>
@@ -203,34 +192,30 @@
             <input type="checkbox" id="crashcensor" name="crashsensor">
             <label for="crashcensor"> Senzora Parkimi </label>
             </div></div>
-            <div class="col-sm-3">
             <div class="checkbox checkbox-inline">
             <input type="checkbox" id="leatherseats" name="leatherseats">
             <label for="leatherseats"> Karrikat Lekure </label>
             </div>
             </div>
-            </div>
-                                 
+
             <div class="form-group">
-                <div class="col-sm-8 col-sm-offset-2">
+                <div class="col-sm-8 col-sm-offset-4">
                    <button class="btn btn-default" type="reset">Cancel</button>
                    <button class="btn btn-primary" name="submit" type="submit">Save changes</button>
                 </div>
             </div>
-
-
+            </div>
+            </div>
+            </div>
+                            </form>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-            
-
             </div>
-        </div>
-        
-    
 
+
+        </div>
     </div>
 </div>
 

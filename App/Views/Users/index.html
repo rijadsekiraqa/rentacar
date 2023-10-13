@@ -10,20 +10,25 @@
         <div class="row">
             <div class="col-md-12">
 
-                <h2 class="page-title">Menagjo Perdoruesit</h2>
+                <h2 class="page-title">Menagjo Administratoret</h2>
+                <div class="add-product">
+                    <a href="/admins-create">Shto Administrator</a>
+                </div>
 
                 <!-- Zero Configuration Table -->
                 <div class="panel panel-default">
                     <div class="panel-heading">Perdoruesit e Regjistruar</div>
                     <div class="panel-body">
-                
+                        {% if message %}
+                        <div class="succWrap">{{ message }}</div>
+                        {% endif %}
                         <table id="zctb" class="display table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>Emri</th>
                                     <th>Mbiemri</th>
                                     <th>Email</th>
-                                    <th>Passwordi</th>
                                     <th>Vepro</th>
                                 </tr>
                             </thead>
@@ -31,10 +36,10 @@
                             <tbody>
                                 {% for user in users %}
                                 <tr>
+                                    <td>{{ user.id }}</td>
                                     <td>{{ user.name }}</td>
                                     <td>{{ user.surname }}</td>
                                     <td>{{ user.email }}</td>
-                                    <td>{{ user.password }}</td>
                                     <td><a href="/admins-edit?id={{ user.id }}"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;
                                         <a href="/admins-delete?id={{ user.id }}" onclick="return confirm('Do you want to delete');"><i class="fa fa-close"></i></a></td>
                                     </td>
